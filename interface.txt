@@ -1,0 +1,45 @@
+interface EntityFactory {
+	static String[] getEntityTypeName();
+	static EntitySet getEntitySet(String entity_type);
+	static Entity createEntity(String entity_type);
+}
+	
+interface EntitySet	{
+	String getType();
+	Entity getEntity(String id);
+	String[] searchResult(String attribute, Predicate<String> searchFunction);
+	String[] all();
+	boolean add(Entity new_entity);
+}
+	
+interface Entity {
+	String getType();
+	String[] getAttributesName();
+	String getAttribute(String attribute_name);
+	boolean setAttribute(String attribute_name, String value);
+	boolean setAttributes(String[] attribute_names, String[] values);
+	boolean delete();
+	boolean undelete();
+}
+
+---
+note : Data in JSON.
+						GET request						POST request
+
+./Account : 			respond with user list			Control login, logout and register
+						admin only						Admin can CRUD
+
+./Book: 				respond with book list, 		Control book CRUD
+						search included					librarian only
+
+./Reservation : 		respond with reservation list	Making reservation request.
+						librarian only
+						
+./Renewal : 			respond with renewal-req list	Making renewal request.
+						librarian only
+
+./Borrow : 				respond with 					Control librarian's borrow managing
+						currently borrow list
+						
+./ChangeHistory : 		Respond with change history. 
+						admin only.

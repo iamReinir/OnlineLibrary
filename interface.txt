@@ -1,4 +1,6 @@
-interface EntityFactory {
+(Huy)
+
+class EntityFactory {	
 	static String[] getEntityTypeName();
 	static EntitySet getEntitySet(String entity_type);
 	static Entity createEntity(String entity_type);
@@ -7,8 +9,8 @@ interface EntityFactory {
 interface EntitySet	{
 	String getType();
 	Entity getEntity(String id);
-	String[] searchResult(String attribute, Predicate<String> search_function);
-	String[] all();
+	Entity[] searchResult(String attribute, Predicate<String> search_function);
+	Entity[] all();
 	boolean add(Entity new_entity);
 }
 	
@@ -24,57 +26,22 @@ interface Entity {
 
 ---
 
+session:
+	user_id
+	username
+	role
+
+(Dương)
 ./login : login controller, redirect here to login
 ./logout : logout controller, redirect here to logout
 ./register : register controller, redirect here to register
 ./profile : redirect here to show user's profile
 
+(Thuỳ)
 ./librarian : librarian management page, if user role is librarian then redirect here.
 
+(Ngân)
 ./admin : admin management page , if user role is admin then redirect here.
 
+(Trung)
 ./index : main page, with book search, login/out, register.
-
----
-note : Data in JSON.
-						GET request							POST request
-
-./Account : 			respond with user list				Control login, logout and register
-						admin only							Admin can CRUD
-
-						parameter:
-							(this format is 
-							default of HTML form)						
-						search (general search)		
-						
-
-./Book: 				respond with book list, 			Control book CRUD
-						search included						librarian only
-						
-						parameters:							keys:					
-						search (general search)									
-						
-						ex: 
-						./Book : return all book
-						./Book?search=jame : search 
-						for books that has the word
-						"jame" in either their title,
-						author, is their ISBN 
-						or public year
-					
-						
-
-./Reservation : 		respond with reservation list		Making reservation request.
-						librarian only
-
-						
-./Renewal : 			respond with renewal-req list		Making renewal request.
-						librarian only
-
-
-./Borrow : 				respond with 						Control librarian's borrow managing
-						currently borrow list
-
-						
-./ChangeHistory : 		Respond with change history. 
-						admin only.

@@ -1,0 +1,25 @@
+<%@ page pageEncoding="UTF-8" %>
+
+<header>
+    <script src="js/header.js"></script>
+    <% 
+        String role = (String) session.getAttribute("role"); 
+        String username = (String) session.getAttribute("username");
+        System.out.println("role : " + role);
+    %>
+    <section id="top">
+    <h2>Online Library</h2>  
+    <button onclick="navbarVisibilityFlip()">  </button>
+    </section>
+    <nav id="navBar">        
+        <% if(role == null || role.equals("quest")) { %>
+        <a href="./login">Login</a>
+        <a href="./register">Register</a>
+        <% } %>
+        <% if(role != null && role.equals("reader")) { %>
+        <p>Logged in as <%=username%></p>
+        <a href="./profile">Personal profile</a>
+        <a href="./logout">Logout</a>
+        <% } %>
+    </nav>   
+</header>

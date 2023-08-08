@@ -1,4 +1,4 @@
-package com.mycompany.onlinelibrary.model_interface;
+package model_interface;
 
 /**
  * This is an interface represent an Entity, or one row of a relational table.

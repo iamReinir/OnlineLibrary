@@ -1,4 +1,4 @@
-package com.mycompany.onlinelibrary.model_interface;
+package model_interface;
 
 import java.util.function.Predicate;
 

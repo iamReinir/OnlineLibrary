@@ -1,5 +1,4 @@
 (Huy)
-
 class EntityFactory {	
 	static String[] getEntityTypeName();
 	static EntitySet getEntitySet(String entity_type);
@@ -29,8 +28,8 @@ interface Entity {
 session:
 	user_id
 	username
-	role
-
+	role : reader / librarian / admin / (guest)
+	
 (Dương)
 ./login : login controller, redirect here to login
 ./logout : logout controller, redirect here to logout

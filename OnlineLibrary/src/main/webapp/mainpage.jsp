@@ -30,7 +30,7 @@
             <img 
                 src="https://www.claws.in/static/book-cover-placeholder-e1563706855534.jpg" 
                 alt="cover"/>
-            <div id="book_desc">
+            <div id="book_desc" style="cursor: pointer;" onclick="window.location.href='book.jsp?book_id=12'">
                 <h3><%=books[i].getAttribute("title")%></h3>
                 <p>
                     <%=books[i].getAttribute("author") 

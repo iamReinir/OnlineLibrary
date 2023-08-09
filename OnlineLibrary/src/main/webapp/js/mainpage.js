@@ -44,4 +44,4 @@ function createPageButton(pageNum,symbol){
     return leftBtn;
 }
 
-pager(currentPage);
+//pager(currentPage);

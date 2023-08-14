@@ -8,7 +8,6 @@
     contentType="text/html" 
     pageEncoding="UTF-8" 
     import="model_interface.*, java.util.function.Predicate" %>
-<%@include file="WEB-INF/jspf/libraries.jspf" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -41,6 +40,9 @@
                 } else {
                     books = EntityFactory.getEntitySet("book").all();
                 }
+                if(books.length == 0){ %>
+                <h3>No book to show....</h3>
+                <% }
                 for (int i = 0; i < books.length; ++i) {
                     String bookid = books[i].getAttribute("id");
             %>            
@@ -52,14 +54,16 @@
                     src="http://lgimages.s3.amazonaws.com/nc-sm.gif" 
                     alt="cover"/>
                 <summary
-                    id="book_desc" >
+                    class="book_desc" >
                     <h3><%=books[i].getAttribute("title")%></h3>                   
-                    <%=books[i].getAttribute("summary")%><br/>
+                    <%=books[i].getAttribute("summary")%> I’m sorry but I’m not sure what you’re asking for. Could you please clarify your request? If you’re looking for a summary of a book, I suggest you provide me with the title and author of the book so I can help you better. <br/>
                     <%=books[i].getAttribute("year_of_pub")%>                         
                 </summary>
             </article>                
             <%}%>
+            
         </section>
-        <script <script src="js/defaultStyle.js"></script>
+            <%@include file="WEB-INF/jspf/footer.jspf" %>
+        <script <script src="js/defaultStyle.js"></script>        
     </body>
 </html>

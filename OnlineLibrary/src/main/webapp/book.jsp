@@ -12,6 +12,9 @@
         <title>JSP Page</title>
     </head>
     <body>        
+        <%@include file="WEB-INF/jspf/header.jspf" %>
         <h1>Book view of <%=request.getParameter("book_id")%></h1>
+        <%@include file="WEB-INF/jspf/footer.jspf" %>
+        <script <script src="js/defaultStyle.js"></script>        
     </body>
 </html>

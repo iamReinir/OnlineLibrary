@@ -4,6 +4,15 @@ css.setAttribute("rel", "stylesheet");
 css.setAttribute("href", "./css/defaultStyle.css");
 document.getElementsByTagName("head")[0].appendChild(css);
 
+//Add font awesome icon;
+let fa = document.createElement("link");
+fa.setAttribute("rel", "stylesheet");
+fa.setAttribute(
+  "href",
+  "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+);
+document.getElementsByTagName("head")[0].appendChild(fa);
+
 // header should have a h1 and a nav element
 // turn the first element of the header into a section
 let header = document.getElementsByTagName("header")[0];

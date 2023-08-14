@@ -14,8 +14,8 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Online Library</title>
-    </head>
-    <body>
+    </head>        
+    <body>     
         <%@ include file="WEB-INF/jspf/header.jspf" %>
         <form>
             <input type="text" name="query" placeholder="Search for a book..." 
@@ -49,7 +49,7 @@
                      style="cursor: pointer;" 
                      onclick="window.location.href = 'book.jsp?book_id=<%=bookid%>'">
                 <img 
-                    src="https://www.claws.in/static/book-cover-placeholder-e1563706855534.jpg" 
+                    src="http://lgimages.s3.amazonaws.com/nc-sm.gif" 
                     alt="cover"/>
                 <summary
                     id="book_desc" >

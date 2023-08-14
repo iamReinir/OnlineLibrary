@@ -4,6 +4,7 @@
  */
 package stubForEntity;
 
+import java.util.ArrayList;
 import java.util.function.Predicate;
 import model_interface.Entity;
 import model_interface.EntitySet;
@@ -26,7 +27,18 @@ public class BookSetStub implements EntitySet {
 
     @Override
     public Entity[] searchResult(Predicate<Entity> search_function) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        ArrayList<Entity> res = new ArrayList<>();
+        Entity[] everything = all();
+        for (Entity x : everything) {
+            if (search_function.test(x) == true) {
+                res.add(x);
+            }
+        }
+        Entity[] ret = new Entity[res.size()];
+        for (int i = 0; i < ret.length; ++i) {
+            ret[i] = res.get(i);
+        }
+        return ret;
     }
 
     @Override

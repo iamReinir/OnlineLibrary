@@ -42,10 +42,10 @@ public class BookStub implements Entity {
                 return id;
             case "title":
                 return title;
-            case "author":
-                return author;
+            case "year_of_pub":
+                return "2023";
             default:
-                return null;
+                return "------";
         }
     }
 

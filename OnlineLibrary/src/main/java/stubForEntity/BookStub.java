@@ -22,7 +22,6 @@ public class BookStub implements Entity {
         this.author = author;
     }
 
-
     @Override
     public String getType() {
         return "book";
@@ -45,7 +44,11 @@ public class BookStub implements Entity {
             case "year_of_pub":
                 return "2023";
             default:
-                return "------";
+                return "------ I’m sorry but I’m not sure what you’re asking for. "
+                        + "Could you please clarify your request? "
+                        + "If you’re looking for a summary of a book, "
+                        + "I suggest you provide me with the title "
+                        + "and author of the book so I can help you better.\n";
         }
     }
 

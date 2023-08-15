@@ -6,7 +6,7 @@
         String username = (String) session.getAttribute("username");
         System.out.println("role : " + role);
     %>
-    <h1>Online Library</h1>     
+    <h1><a href="./index">Online Library<a/></h1>     
     <nav id="userActions">        
         <% if (role == null || role.equals("quest")) { %>
         <a href="./login">Login</a>

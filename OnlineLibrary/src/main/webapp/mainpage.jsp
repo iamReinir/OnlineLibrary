@@ -8,6 +8,19 @@
     contentType="text/html" 
     pageEncoding="UTF-8" 
     import="model_interface.*, java.util.function.Predicate" %>
+ <% 
+            String searchString = (String) request.getParameter("query");                        
+            Entity[] books = null;
+            Predicate<Entity> title_n_author_search = (b)->{
+                boolean title_match = b.getAttribute("title")
+                                        .toLowerCase()
+                                        .contains(searchString.toLowerCase());
+                boolean author_match = b.getAttribute("author")
+                                        .toLowerCase()
+                                        .contains(searchString.toLowerCase());
+                return title_match || author_match;
+                            };
+%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -15,28 +28,22 @@
         <title>Online Library</title>
     </head>        
     <body>     
+       
         <%@ include file="WEB-INF/jspf/header.jspf" %>
-        <form>
-            <input type="text" name="query" placeholder="Search for a book..." 
+        <form id="bookSearchBar">
+            <input type="text" 
+                   name="query" 
+                   placeholder="Search for a book..."                    
+                   value="<%=searchString!=null?searchString:""%>"                   
                    class="searchBar"/>
         </form>
         <nav id="booksNav">            
         </nav>
         <section id="books">
-            <%
-                String searchString = (String) request.getParameter("query");
-                Entity[] books = null;
+            <%                               
                 if (searchString != null) {
                     books = EntityFactory.getEntitySet("book")
-                            .searchResult((  
-                                b)->{
-                                return b.getAttribute("title")
-                                        .toLowerCase()
-                                        .contains(searchString.toLowerCase())
-                                        || b.getAttribute("author")
-                                                .toLowerCase()
-                                                .contains(searchString.toLowerCase());
-                            });
+                            .searchResult(title_n_author_search);
                 } else {
                     books = EntityFactory.getEntitySet("book").all();
                 }

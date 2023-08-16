@@ -11,15 +11,13 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import model_interface.Entity;
-import model_interface.EntityFactory;
 
 /**
  *
  * @author Giga P34
  */
-@WebServlet(name = "LoginController", urlPatterns = {"/login"})
-public class LoginController extends HttpServlet {
+@WebServlet(name = "LogoutController", urlPatterns = {"/logout"})
+public class LogoutController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,10 +32,10 @@ public class LoginController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try ( PrintWriter out = response.getWriter()) {
-            request.getSession().setAttribute("role", "reader");
-            request.getSession().setAttribute("username", "reinir");
-            out.print("<script>alert('Login successfully as Reinir');"
+            request.getSession().invalidate();
+            out.print("<script>alert('Logout successfully');"
                     + "window.location.href = './index';</script>");
+
         }
     }
 

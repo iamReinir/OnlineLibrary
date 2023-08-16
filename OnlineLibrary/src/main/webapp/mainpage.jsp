@@ -11,6 +11,8 @@
  <% 
             String searchString = (String) request.getParameter("query");                        
             Entity[] books = null;
+            
+            //function : search book based on title and author
             Predicate<Entity> title_n_author_search = (b)->{
                 boolean title_match = b.getAttribute("title")
                                         .toLowerCase()
@@ -19,7 +21,14 @@
                                         .toLowerCase()
                                         .contains(searchString.toLowerCase());
                 return title_match || author_match;
-                            };
+            };
+            
+            if (searchString != null) {
+                books = EntityFactory.getEntitySet("book")
+                            .searchResult(title_n_author_search);
+            } else {
+                books = EntityFactory.getEntitySet("book").all();
+            }
 %>
 <!DOCTYPE html>
 <html>
@@ -40,37 +49,27 @@
         <nav id="booksNav">            
         </nav>
         <section id="books">
-            <%                               
-                if (searchString != null) {
-                    books = EntityFactory.getEntitySet("book")
-                            .searchResult(title_n_author_search);
-                } else {
-                    books = EntityFactory.getEntitySet("book").all();
-                }
-                if(books.length == 0){ %>
+            <% if(books == null || books.length == 0){ %>
                 <h3>No book to show....</h3>
-                <% }
-                for (int i = 0; i < books.length; ++i) {
-                    String bookid = books[i].getAttribute("id");
+            <% }
+            for (int i = 0; i < books.length; ++i) {
+                String bookid = books[i].getAttribute("id");
             %>            
-            <article id="bookid_<%=bookid%>"
-                     class="clickable"
-                     style="cursor: pointer;" 
-                     onclick="window.location.href = 'book.jsp?book_id=<%=bookid%>'">
-                <img 
-                    src="http://lgimages.s3.amazonaws.com/nc-sm.gif" 
-                    alt="cover"/>
-                <summary
-                    class="book_desc" >
-                    <h3><%=books[i].getAttribute("title")%></h3>                   
-                    <%=books[i].getAttribute("summary")%> I’m sorry but I’m not sure what you’re asking for. Could you please clarify your request? If you’re looking for a summary of a book, I suggest you provide me with the title and author of the book so I can help you better. <br/>
-                    <%=books[i].getAttribute("year_of_pub")%>                         
-                </summary>
-            </article>                
-            <%}%>
-            
+                <article id="bookid_<%=bookid%>"
+                        class="clickable"
+                        style="cursor: pointer;" 
+                        onclick="window.location.href = 'book.jsp?book_id=<%=bookid%>'">
+                    <img src="http://lgimages.s3.amazonaws.com/nc-sm.gif" 
+                            alt="cover"/>
+                    <summary class="book_desc">
+                        <h3><%=books[i].getAttribute("title")%></h3>                   
+                        <%=books[i].getAttribute("summary")%> <br/>
+                        <%=books[i].getAttribute("year_of_pub")%>                         
+                    </summary>
+                </article>                
+            <%}%>            
         </section>
-            <%@include file="WEB-INF/jspf/footer.jspf" %>
+        <%@include file="WEB-INF/jspf/footer.jspf" %>
         <script <script src="js/defaultStyle.js"></script>        
     </body>
 </html>

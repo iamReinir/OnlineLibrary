@@ -3,8 +3,7 @@
 <header>
     <%
         String role = (String) session.getAttribute("role");
-        String username = (String) session.getAttribute("username");
-        System.out.println("role : " + role);
+        String username = (String) session.getAttribute("username");        
     %>
     <h1><a href="./index">Online Library<a/></h1>     
     <nav id="userActions">        

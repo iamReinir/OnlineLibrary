@@ -7,11 +7,13 @@ import stubForEntity.BookSetStub;
  */
 public class EntityFactory {
     public static String[] getEntityTypeName() {
-        //TODO : Huy viết cái này
-        return null;
+        return new String[]{};
     }
 
     public static EntitySet getEntitySet(String entity_type) {
+        if (entity_type.equals("books")) {
+            return new BookSetStub();
+        }
         return new BookSetStub();
         //TODO : Huy viết cái này        
     }

@@ -32,10 +32,15 @@ public class IndexController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try ( PrintWriter out = response.getWriter()) {
-            request.getSession().setAttribute("role", "reader");
-            request.getSession().setAttribute("username", "reinir");
-            request.getRequestDispatcher("./mainpage.jsp").include(request, response);
-        }
+//            request.getSession().setAttribute("role", "admin");
+//            request.getSession().setAttribute("username", "reinir");
+            String user_role = (String) request.getSession().getAttribute("role");
+            if (user_role == null || user_role.equals("reader")) {
+                request.getRequestDispatcher("./mainpage.jsp").include(request, response);
+            } else {
+                request.getRequestDispatcher("./notfound.html").forward(request, response);
+            }
+        }        
     }
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**

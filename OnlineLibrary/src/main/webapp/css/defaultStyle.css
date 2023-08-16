@@ -63,7 +63,7 @@ header .clickable {
   margin: 0;
 }
 
-a:hover {
+header a:hover {
   background-color: var(--activeMain);
 }
 
@@ -144,6 +144,8 @@ form .searchBar {
   overflow: scroll;
 }
 
+/* styling of book.jsp */
+
 #book{
     margin: 2rem;
     padding: 1rem;
@@ -154,6 +156,21 @@ form .searchBar {
     display: block;
     width:60%;
     margin:auto;    
+}
+
+#review_form{
+    font-size: 3rem;
+    width:80%;
+    height: 10rem;
+    margin:auto;    
+    padding:1rem;
+}
+
+#review_form textarea{
+    display:block;
+    width:95%;
+    height:100%;
+    margin:auto;
 }
 
 

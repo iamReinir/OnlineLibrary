@@ -15,11 +15,15 @@ public class BookStub implements Entity {
     public String id;
     public String title;
     public String author;
+    public String year;
+    public String summary;
 
-    public BookStub(String id, String title, String author) {
+    public BookStub(String id, String title, String author, String year, String summary) {
         this.id = id;
         this.title = title;
         this.author = author;
+        this.year = year;
+        this.summary = summary;
     }
 
     @Override
@@ -41,8 +45,12 @@ public class BookStub implements Entity {
                 return id;
             case "title":
                 return title;
+            case "author":
+                return author;
             case "year_of_pub":
-                return "2023";
+                return year;
+            case "summary":
+                return summary;
             default:
                 return "------ I’m sorry but I’m not sure what you’re asking for. "
                         + "Could you please clarify your request? "

@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
- */
 package main_controller;
 
 import java.io.IOException;
@@ -32,8 +28,7 @@ public class IndexController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try ( PrintWriter out = response.getWriter()) {
-//            request.getSession().setAttribute("role", "admin");
-//            request.getSession().setAttribute("username", "reinir");
+
             String user_role = (String) request.getSession().getAttribute("role");
             if (user_role == null || user_role.equals("reader")) {
                 request.getRequestDispatcher("./mainpage.jsp").include(request, response);

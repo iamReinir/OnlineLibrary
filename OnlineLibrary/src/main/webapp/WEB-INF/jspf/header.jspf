@@ -9,7 +9,7 @@
     <nav id="userActions">        
         <% if (role == null || role.equals("quest")) { %>
         <a href="./login">Login</a>
-        <a href="./register">Register</a>
+        <a href="./signup">Sign Up</a>
         <% } %>
         <% if (role != null && role.equals("reader")) {%>
         <p>Logged in as <%=username%></p>

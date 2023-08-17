@@ -31,3 +31,5 @@ function navbarVisibilityFlip() {
   let navBar = document.getElementsByTagName("nav")[0];
   navBar.style.display = navBar.style.display === "none" ? "flex" : "none";
 }
+
+navbarVisibilityFlip();

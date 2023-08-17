@@ -1,22 +1,17 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
- */
 package main_controller;
 
+import DAO.User;
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import model_interface.Entity;
-import model_interface.EntityFactory;
 
 /**
  *
- * @author Giga P34
+ * @author Huynh Thai Duong
  */
 @WebServlet(name = "LoginController", urlPatterns = {"/login"})
 public class LoginController extends HttpServlet {
@@ -32,13 +27,7 @@ public class LoginController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try ( PrintWriter out = response.getWriter()) {
-            request.getSession().setAttribute("role", "reader");
-            request.getSession().setAttribute("username", "reinir");
-            out.print("<script>alert('Login successfully as Reinir');"
-                    + "window.location.href = './index';</script>");
-        }
+        request.getRequestDispatcher("./login.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -53,7 +42,29 @@ public class LoginController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        Cookie[] cookies = request.getCookies();
+        String username = null;
+        String password = null;
+
+        if (cookies != null) {
+            for (Cookie cooky : cookies) {
+                if (cooky.getName().equals("username")) {
+                    username = cooky.getValue();
+                }
+                if (cooky.getName().equals("password")) {
+                    password = cooky.getValue();
+                }
+            }
+        }
+        User user = User.login(username, password);
+        if (user != null) {
+            request.getSession().setAttribute("user_id", user.user_id);
+            request.getSession().setAttribute("username", user.username);
+            request.getSession().setAttribute("role", user.role);
+            response.sendRedirect("./index");
+            return;
+        }
+        request.getRequestDispatcher("login.jsp").forward(request, response);
     }
 
     /**
@@ -67,7 +78,31 @@ public class LoginController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        //check login
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
+        boolean remember = request.getParameter("remember") != null;
+
+        //check username va password
+        User user = User.login(username, password);
+        if (user != null) {//hop le => luu len session
+            if (remember == true) {
+                Cookie usernameCookie = new Cookie("username", username);
+                usernameCookie.setMaxAge(60 * 60 * 24);
+                Cookie passwordCookie = new Cookie("password", password);
+                usernameCookie.setMaxAge(60 * 60 * 24);
+                response.addCookie(usernameCookie);
+                response.addCookie(passwordCookie);
+            }
+            request.getSession().setAttribute("user_id", user.user_id);
+            request.getSession().setAttribute("username", user.username);
+            request.getSession().setAttribute("role", user.role);
+            response.sendRedirect("./index");
+        } else {//khong hop le => tra ve loi
+            request.setAttribute("error", "Username or password incorrect!");
+            request.getRequestDispatcher("login.jsp").forward(request, response);
+        }
+
     }
 
     /**

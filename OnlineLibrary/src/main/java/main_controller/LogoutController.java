@@ -1,20 +1,16 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
- */
 package main_controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author Giga P34
+ * @author Huynh Thai Duong
  */
 @WebServlet(name = "LogoutController", urlPatterns = {"/logout"})
 public class LogoutController extends HttpServlet {
@@ -30,13 +26,21 @@ public class LogoutController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try ( PrintWriter out = response.getWriter()) {
-            request.getSession().invalidate();
-            out.print("<script>alert('Logout successfully');"
-                    + "window.location.href = './index';</script>");
-
+        request.getSession().invalidate();
+        Cookie[] cookie = request.getCookies();
+        String username = null;
+        String password = null;
+        for (Cookie cooky : cookie) {
+            if (cooky.getName().equals("username")) {
+                cooky.setMaxAge(0);
+                response.addCookie(cooky);
+            }
+            if (cooky.getName().equals("password")) {
+                cooky.setMaxAge(0);
+                response.addCookie(cooky);
+            }
         }
+        response.sendRedirect("./index");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -8,6 +8,7 @@
     contentType="text/html" 
     pageEncoding="UTF-8" 
     import="model_interface.*, java.util.function.Predicate"%>
+<%@include file="WEB-INF/jspf/libraries.jspf" %>
 <%    
     String user_id = (String) session.getAttribute("user_id");
     String book_id = (String) request.getParameter("book_id");
@@ -25,13 +26,15 @@
     // Functions to get the book's reviews 
     // and check whether current user is borrowing this book
     Predicate<Entity> searchForBook = (review)->{
-            return review.getAttribute("book_id").equals(book.getAttribute("id"));
+            return review.getAttribute("book_id").equals(book_id);
     };
     Predicate<Entity> user_is_borrowing_this = (borrowing) ->{
         boolean same_user = borrowing.getAttribute("borrower_id").equals(user_id);
         boolean same_book = borrowing.getAttribute("borrowed_book").equals(book_id);
         return same_user && same_book;
-    };
+    };    
+    
+    // Get data
     Entity[] reviews = EntityFactory.getEntitySet("review")
             .searchResult(searchForBook);
     boolean isBorrowing = EntityFactory.getEntitySet("borrowing")
@@ -59,38 +62,68 @@
                 </p>
                 <h3>Year</h3>
                 <p><%=book.getAttribute("year_of_pub")%></p>                        
-                <form id="buttonForm">
+                <form id="buttonForm" action="./borow">
+                    <input type="hidden" name="book_id" value="<%=book_id%>">
                     <% if (role != null && isBorrowing) { %>                    
                         <input type="submit" name="renewal" value="Renew borrowing time"/>
                     <% } else if(role != null && !isBorrowing) { %>
-                        <input type="submit" name="borrow" value="Borrow this book"/>
+                        <input type="submit" name="reservation" value="Make reservation"/>
                     <% } %>
                 </form>
         </section>
         <section id="reviews">    
+            <h2>Reviews and ratings:</h2>
             <% if(role != null) { %>
             <a class="clickable"
                 onclick="document.getElementById('review_form')
                             .style.display = 'block'">
                 Leave a review</a>
-            <form id="review_form" style="display:none;">
+            <form id="review_form" method="POST" action="./review" style="display:none;" >                
+                <input type="hidden" name="book_id" value="<%=book_id%> "/>
+                <div id="rating_form">
+                    <input class="star star-5" id="star-5" type="radio" name="rating" value="5" required/>   
+                    <label for="star-5" class="fa fa-star"></label>
+                    <input class="star star-4" id="star-4" type="radio" name="rating" value="4" required/>
+                    <label for="star-4" class="fa fa-star"></label>
+                    <input class="star star-3" id="star-3" type="radio" name="rating" value="3" required/>
+                    <label for="star-3" class="fa fa-star"></label>
+                    <input class="star star-2" id="star-2" type="radio" name="rating" value="2" required/>
+                    <label for="star-2" class="fa fa-star"></label>
+                    <input class="star star-1" id="star-1" type="radio" name="rating" value="1" required/>    
+                    <label for="star-1" class="fa fa-star"></label>
+                </div>
                 <textarea 
+                    style="resize:none;"
                     name="review" 
                     placeholder="type your review..."
                     value=""></textarea>
+                <input type="submit" value="Submit"/>
             </form>                
             <% }
-            for (int i = 0; i < reviews.length; ++i) {%>
+            for (int i = 0; i < reviews.length; ++i) {
+                String userid = reviews[i].getAttribute("user_id");
+            %>
                 <div class="review">
-                    <img src="http://lgimages.s3.amazonaws.com/nc-sm.gif"
-                            alt="avatar"
-                            class="avatar"/>
-                    <span class="rating">
-                        <%= reviews[i].getAttribute("rating")%>
-                    </span>
-                    <p> 
-                        <%=reviews[i].getAttribute("user_review")%> 
-                    </p>                
+                    <div class="avatarContainer">
+                        <img src="http://lgimages.s3.amazonaws.com/nc-sm.gif"
+                                alt="avatar"
+                                class="avatar"/>
+                    </div>
+                    <div class="contentContainer">
+                        <h3> <%= 
+//                            EntityFactory.getEntitySet("user")
+//                                .searchResult(user->{
+//                                    return user.getAttribute("id").equals(userid);
+//                                })[0].getAttribute("username")
+                                "Placeholder for username"
+                        %> </h3>
+                        <span class="rating">
+                            Rating: <%= reviews[i].getAttribute("rating")%> / 5
+                        </span>
+                        <p> 
+                            <%=reviews[i].getAttribute("user_review")%> 
+                        </p>                
+                    </div>
                 </div>
             <%}%>
         </section>

@@ -1,0 +1,74 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.wrapper {
+    background-image: linear-gradient(-30deg, rgba(210, 251, 243, 1), white);
+    height: 100vh;
+    width: 100%;
+    position: relative;
+    font-family: 'Poppins', sans-serif;
+}
+
+.signup {
+    border: 1px solid #E5E5E5;
+    border-radius: 25px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 320px;
+    height: 530px;
+    background-color: #FFFFFF;
+}
+
+.heading {
+    font-size: 32px;
+    font-weight: 500;
+    text-align: center;
+    margin: 20px 0px;
+}
+
+.username, .password, .email, .repeat-password {
+    margin-left: 10px;
+    font-size: smaller;
+}
+
+.username input, .password input, .email input, .repeat-password input {
+    width: 280px;
+    border: 0;
+    outline: 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    margin-top: 15px;
+    margin-bottom: 30px;
+}
+
+.btn-signup {
+    width: 210px;
+    height: 40px;
+    margin-left: 20px;
+    margin-top: 30px;
+    background-image: linear-gradient(-30deg, rgba(210, 251, 243, 1), white);
+    border: none;
+    border-radius: 25px;
+    font-weight: lighter;
+}
+
+.btn-signup:hover {
+    background-image: linear-gradient(-30deg, rgb(196, 239, 230), white);
+}
+
+.login {
+    text-decoration: none;
+    font-weight:  500;
+    font-size: 14px;
+    margin: 3px 10px;
+}
+
+.error_mess {
+    text-align: center;
+    margin-top: 10px;
+    font-size: smaller;
+}

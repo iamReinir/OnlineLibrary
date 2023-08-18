@@ -1,11 +1,6 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
- */
 package main_controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -16,7 +11,7 @@ import model_interface.EntityFactory;
 
 /**
  *
- * @author Giga P34
+ * @author Nguyen Xuan Trung
  */
 @WebServlet(name = "ReviewController", urlPatterns = {"/review"})
 public class ReviewController extends HttpServlet {
@@ -35,7 +30,6 @@ public class ReviewController extends HttpServlet {
 
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -61,21 +55,23 @@ public class ReviewController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
-            PrintWriter out = response.getWriter();            
+            //PrintWriter out = response.getWriter();
+            request.setCharacterEncoding("UTF-8");
             String review = request.getParameter("review");
             String user_id = (String) request.getSession().getAttribute("user_id");
+            if (user_id == null || user_id.isEmpty()) {
+                response.sendRedirect("./login");
+                return;
+            }
             String book_id = request.getParameter("book_id");
             String rating = request.getParameter("rating");
-//            Entity newReview = EntityFactory.createEntity("review");
-//            newReview.setAttribute("user_id", user_id);
-//            newReview.setAttribute("book_id", book_id);
-//            newReview.setAttribute("review", review);
-//            newReview.setAttribute("rating", rating);
-//            EntityFactory.getEntitySet("review").add(newReview);
-            System.out.println(user_id + book_id + rating + review);
-            out.write("<script>window.location.href='./book.jsp?book_id="
-                    + book_id + "'"
-                    + ";</script>");
+            Entity newReview = EntityFactory.createEntity("review");
+            newReview.setAttribute("user_id", user_id);
+            newReview.setAttribute("book_id", book_id);
+            newReview.setAttribute("user_review", review);
+            newReview.setAttribute("rating", rating);
+            EntityFactory.getEntitySet("review").add(newReview);
+            response.sendRedirect("./book.jsp?book_id=" + book_id);
         } catch (Exception ex) {
             request.getRequestDispatcher("notfound.html").forward(request, response);
         }

@@ -1,3 +1,7 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
+ */
 package main_controller;
 
 import java.io.IOException;
@@ -7,13 +11,15 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model_interface.Entity;
+import model_interface.EntityFactory;
 
 /**
  *
- * @author Nguyen Xuan Trung
+ * @author Giga P34
  */
-@WebServlet(name = "IndexController", urlPatterns = {"/index"})
-public class IndexController extends HttpServlet {
+@WebServlet(name = "UpdateController", urlPatterns = {"/update"})
+public class UpdateController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -27,26 +33,11 @@ public class IndexController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try {
-
-            String user_role = (String) request.getSession().getAttribute("role");
-            user_role = user_role == null ? "" : user_role; // Null check
-            String main_page = "./notfound.html";
-            switch (user_role) {
-                case "admin":
-                    main_page = "./admin";
-                    break;
-                case "reader":
-                case "librarian":
-                default: //guest user
-                    main_page = "./mainpage.jsp";
-                    break;
-            }
-            request.getRequestDispatcher(main_page).forward(request, response);
-        } catch (Exception ex) {
-            System.out.println("ERROR IN INDEX_CONTROLLER!");
+        try ( PrintWriter out = response.getWriter()) {
+            request.getRequestDispatcher("./update.jsp").forward(request, response);
         }
     }
+
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -73,7 +64,30 @@ public class IndexController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        boolean result = true;
+        String book_id = request.getParameter("book_id");
+        String title = request.getParameter("title");
+        String isbn = request.getParameter("isbn");
+        String author = request.getParameter("author");
+        String year = request.getParameter("year_of_pub");
+        String summary = request.getParameter("summary");
+        boolean delete = request.getParameter("delete") != null;
+        Entity book = EntityFactory.getEntitySet("book").getEntity(book_id);
+        result = result && book.setAttribute("title", title);
+        result = result && book.setAttribute("isbn", isbn);
+        result = result && book.setAttribute("author", author);
+        result = result && book.setAttribute("summary", summary);
+        result = result && book.setAttribute("year_of_pub", year);
+        result = result && book.delete(delete);
+        try ( PrintWriter out = response.getWriter()) {
+            out.print("<script>");
+            if (result == true) {
+                out.print("alert('Update success!');");
+            } else {
+                out.print("alert('Update failed! Contact the admin for support!');");
+            }
+            out.print("window.location.href = './index'l </script>");
+        }
     }
 
     /**

@@ -62,9 +62,9 @@
                     <img src="http://lgimages.s3.amazonaws.com/nc-sm.gif" 
                             alt="cover"/>
                     <summary class="book_desc">
-                        <h3><%=books[i].getAttribute("title")%></h3>                   
-                        <%=books[i].getAttribute("summary")%> <br/>
-                        <%=books[i].getAttribute("year_of_pub")%>                         
+                        <h3><%=books[i].getAttribute("title")%> 
+                            - <%=books[i].getAttribute("year_of_pub").split("-")[0]%></h3>                   
+                        <%=books[i].getAttribute("summary")%> <br/>                                                 
                     </summary>
                 </article>                
             <%}%>            

@@ -4,7 +4,7 @@
  */
 package main_controller;
 
-import DAO.User;
+import DAO.UserDAO;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -64,14 +64,14 @@ public class SignupController extends HttpServlet {
         String password = request.getParameter("password");
         String repeat_password = request.getParameter("repeat_password");
         //check username
-        boolean is_duplicated_username = User.isExist(username);
+        boolean is_duplicated_username = UserDAO.isExist(username);
         //user name khong ton tai thi cho phep insert
         if (is_duplicated_username) {
             request.setAttribute("exist", "Username exists");
             request.getRequestDispatcher("signup.jsp").forward(request, response);
         } else {
             if (password.equals(repeat_password) == true) {
-                User.signup(username, password, email, "reader");
+                UserDAO.signup(username, password, email, "reader");
                 response.sendRedirect("login");
             } else {
                 request.setAttribute("error", "Please enter the same password");

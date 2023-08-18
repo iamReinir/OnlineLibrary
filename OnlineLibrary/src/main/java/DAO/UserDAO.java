@@ -9,24 +9,24 @@ import model_interface.EntitySet;
  *
  * @author Giga P34
  */
-public class User {
+public class UserDAO {
 
     public String user_id;
     public String username;
     public String role;
 
-    private User() {
+    private UserDAO() {
     }
 
-    public User(String username, String password) {
+    public UserDAO(String username, String password) {
         //This is for testing
-        if (username != null && password != null
-                && username.equals("reinir") && password.equals("reinir")) {
-            this.user_id = "0";
-            this.username = "reinir";
-            this.role = "reader";
-            return;
-        }
+//        if (username != null && password != null
+//                && username.equals("reinir") && password.equals("reinir")) {
+//            this.user_id = "0";
+//            this.username = "reinir";
+//            this.role = "reader";
+//            return;
+//        }
         //End of testing block
         EntitySet users = EntityFactory.getEntitySet("user");
         Predicate<Entity> check_username_password = (user) -> {
@@ -46,8 +46,8 @@ public class User {
         }
     }
 
-    public static User login(String username, String password) {
-        User u = new User();
+    public static UserDAO login(String username, String password) {
+        UserDAO u = new UserDAO();
         //This is for testing
         if (username != null && password != null
                 && username.equals("reinir") && password.equals("reinir")) {
@@ -67,7 +67,7 @@ public class User {
         if (result.length < 1) {
             return null;
         } else {
-            u.user_id = result[0].getAttribute("user_id");
+            u.user_id = result[0].getAttribute("id");
             u.username = result[0].getAttribute("username");
             u.role = result[0].getAttribute("role");
         }

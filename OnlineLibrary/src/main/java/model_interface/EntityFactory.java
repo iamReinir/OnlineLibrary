@@ -1,10 +1,12 @@
 package model_interface;
 
-import stubForEntity.BookSetStub;
-import stubForEntity.ReviewSetStub;
+import model.*;
+import modelSet.*;
 
 /**
  * Static class to create Entity and EntitySet
+ *
+ * @author Nguyen Xuan Trung
  */
 public class EntityFactory {
 
@@ -20,15 +22,40 @@ public class EntityFactory {
     }
 
     public static EntitySet getEntitySet(String entity_type) {
-        if (entity_type.equals("review")) {
-            return new ReviewSetStub();
+        switch (entity_type) {
+            case "book":
+                return new BookSet();
+            case "review":
+                return new ReviewSet();
+            case "borrowing":
+                return new BorrowingSet();
+            case "renewal":
+                return new RenewalSet();
+            case "reservation":
+                return new ReservationSet();
+            case "user":
+                return new UserSet();
+            default:
+                return null;
         }
-        return new BookSetStub();
-        //TODO : Huy viết cái này        
     }
 
     public static Entity createEntity(String entity_type) {
-        //TODO : Huy viết cái này
-        return null;
+        switch (entity_type) {
+            case "book":
+                return new Book();
+            case "review":
+                return new Review();
+            case "borrowing":
+                return new Borrowing();
+            case "renewal":
+                return new renewal();
+            case "reservation":
+                return new Reservate();
+            case "user":
+                return new User();
+            default:
+                return null;
+        }
     }
 }

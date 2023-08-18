@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-private xmlns="http://www.netbeans.org/ns/project-private/1">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+        <group>
+            <file>file:/E:/OOP/onlineLibrary/src/java/model/borrowing.java</file>
+            <file>file:/E:/OOP/onlineLibrary/src/java/model_interface/Entity.java</file>
+            <file>file:/E:/OOP/onlineLibrary/src/java/modelSet/bookSetStub.java</file>
+            <file>file:/E:/OOP/onlineLibrary/src/java/modelSet/borrowingSetStub.java</file>
+            <file>file:/E:/OOP/onlineLibrary/src/java/model/reservation.java</file>
+            <file>file:/E:/OOP/onlineLibrary/src/java/modelSet/renewalSetStub.java</file>
+            <file>file:/E:/OOP/onlineLibrary/src/java/model_interface/EntityFactory.java</file>
+            <file>file:/E:/OOP/onlineLibrary/src/java/model/user.java</file>
+            <file>file:/E:/OOP/onlineLibrary/src/java/modelSet/reservationSetStub.java</file>
+            <file>file:/E:/OOP/onlineLibrary/src/java/model/review.java</file>
+            <file>file:/E:/OOP/onlineLibrary/src/java/model/renewal.java</file>
+            <file>file:/E:/OOP/onlineLibrary/src/java/modelSet/userSetStub.java</file>
+            <file>file:/E:/OOP/onlineLibrary/src/java/modelSet/reviewSetStub.java</file>
+            <file>file:/E:/OOP/onlineLibrary/src/java/model/book.java</file>
+            <file>file:/E:/OOP/onlineLibrary/src/java/model_interface/EntitySet.java</file>
+        </group>
+    </open-files>
+</project-private>

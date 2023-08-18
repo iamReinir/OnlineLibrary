@@ -1,6 +1,6 @@
 package main_controller;
 
-import DAO.User;
+import DAO.UserDAO;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  *
  * @author Huynh Thai Duong
+ *
  */
 @WebServlet(name = "LoginController", urlPatterns = {"/login"})
 public class LoginController extends HttpServlet {
@@ -42,22 +43,21 @@ public class LoginController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        Cookie[] cookies = request.getCookies();
         String username = null;
         String password = null;
-
-        if (cookies != null) {
-            for (Cookie cooky : cookies) {
-                if (cooky.getName().equals("username")) {
-                    username = cooky.getValue();
-                }
-                if (cooky.getName().equals("password")) {
-                    password = cooky.getValue();
-                }
+        Cookie[] cookies = request.getCookies();
+        cookies = (cookies == null ? new Cookie[]{} : cookies); // To remove the null check
+        for (Cookie cooky : cookies) {
+            if (cooky.getName().equals("username")) {
+                username = cooky.getValue();
+            }
+            if (cooky.getName().equals("password")) {
+                password = cooky.getValue();
             }
         }
-        User user = User.login(username, password);
+        UserDAO user = UserDAO.login(username, password);
         if (user != null) {
+            System.out.println("User id " + user.user_id + " logged in");
             request.getSession().setAttribute("user_id", user.user_id);
             request.getSession().setAttribute("username", user.username);
             request.getSession().setAttribute("role", user.role);
@@ -78,31 +78,33 @@ public class LoginController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        //check login
+        //  Get parameters outta POST request's load
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         boolean remember = request.getParameter("remember") != null;
 
-        //check username va password
-        User user = User.login(username, password);
-        if (user != null) {//hop le => luu len session
-            if (remember == true) {
-                Cookie usernameCookie = new Cookie("username", username);
-                usernameCookie.setMaxAge(60 * 60 * 24);
-                Cookie passwordCookie = new Cookie("password", password);
-                usernameCookie.setMaxAge(60 * 60 * 24);
-                response.addCookie(usernameCookie);
-                response.addCookie(passwordCookie);
-            }
-            request.getSession().setAttribute("user_id", user.user_id);
-            request.getSession().setAttribute("username", user.username);
-            request.getSession().setAttribute("role", user.role);
-            response.sendRedirect("./index");
-        } else {//khong hop le => tra ve loi
+        UserDAO user = UserDAO.login(username, password);
+
+        // Invalid login
+        if (user == null) {
             request.setAttribute("error", "Username or password incorrect!");
             request.getRequestDispatcher("login.jsp").forward(request, response);
+            return;
         }
-
+        // Remember me is checked
+        if (remember == true) {
+            int one_day = 60 * 60 * 24;
+            Cookie usernameCookie = new Cookie("username", username);
+            usernameCookie.setMaxAge(one_day);
+            Cookie passwordCookie = new Cookie("password", password);
+            passwordCookie.setMaxAge(one_day);
+            response.addCookie(usernameCookie);
+            response.addCookie(passwordCookie);
+        }
+        request.getSession().setAttribute("user_id", user.user_id);
+        request.getSession().setAttribute("username", user.username);
+        request.getSession().setAttribute("role", user.role);
+        response.sendRedirect("./index");
     }
 
     /**

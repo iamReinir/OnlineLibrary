@@ -1,13 +1,10 @@
 package modelSet;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.function.Predicate;
-import model.Renewal;
 import model.User;
 import model_interface.Entity;
 import model_interface.EntitySet;
@@ -28,15 +25,15 @@ public class UserSet implements EntitySet {
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 User u = new User();
-                u.setId(rs.getString(1));
-                u.setUsername(rs.getString(2));
-                u.setPassword(rs.getString(3));
-                u.setEmail(rs.getString(4));
-                u.setTelephone_number(rs.getString(5));
-                u.setRole(rs.getString(6));
-                u.setIs_delete(rs.getString(7));
-                u.setRegister_date(rs.getString(8));
-                u.setLast_modified_at(rs.getString(9));
+                u.setId(rs.getString("id_user"));
+                u.setUsername(rs.getString("username"));
+                u.setPassword(rs.getString("password"));
+                u.setEmail(rs.getString("email"));
+                u.setTelephone_number(rs.getString("telephone_number"));
+                u.setRole(rs.getString("role"));
+                u.setIs_delete(rs.getString("is_delete").equals("1") ? "true" : "false");
+                u.setRegister_date(rs.getString("register_date"));
+                u.setLast_modified_at(rs.getString("last_modified_at"));
                 list.add(u);
             }
 

@@ -27,23 +27,9 @@ public class BorowController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
-            PrintWriter out = response.getWriter();
+            //PrintWriter out = response.getWriter();
             //It takes form data, so the value is the button's text
-            String reservation = request.getParameter("reservation");
-            String renewal = request.getParameter("renewal");
-            String book_id = request.getParameter("book_id");
-            String user_id = (String) request.getSession().getAttribute("user_id");
-            if (reservation != null) {
-                System.out.println("Reservation");
-            }
-            if (renewal != null) {
-                System.out.println("Renewal");
-            }
-            out.print("<script>"
-                    + "alert('Your request is recorded and pending!');"
-                    + "window.location.href='./book.jsp?book_id="
-                    + book_id + "'"
-                    + ";</script>");
+            request.getRequestDispatcher("borrow.jsp");
         } catch (Exception ex) {
             request.getRequestDispatcher("notfound.html").forward(request, response);
         }

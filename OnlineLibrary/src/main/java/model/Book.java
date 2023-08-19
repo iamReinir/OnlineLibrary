@@ -11,7 +11,7 @@ import model_interface.Entity;
 
 /**
  *
- * @author PC
+ * @author Ho Quoc Huy
  */
 public class Book implements Entity {
 
@@ -146,6 +146,7 @@ public class Book implements Entity {
 
     @Override
     public String getAttribute(String attribute_name) {
+        String res = null;
         switch (attribute_name) {
             case "id":
                 return id;

@@ -59,45 +59,44 @@
     <body>                             
         <%@include file="WEB-INF/jspf/header.jspf" %>
         <section id="book">
-                <h2><%=book.getAttribute("title")%><h2>
-                
-                <img src="http://lgimages.s3.amazonaws.com/nc-sm.gif"
-                     alt="cover"/>
-                
-                <h3>Summary</h3>
-                <p><%=book.getAttribute("summary")%></p>
-                
-                <h3>Author</h3>
-                <p><%=book.getAttribute("author")%></p>
-                
-                <h3>Year</h3>
-                <p><%=book.getAttribute("year_of_pub").split("-")[0]%></p> 
-                
-                <% String download = book.getAttribute("download_link");
-                System.out.println("download:" + download);
-                if( download != null && !download.isEmpty()) { %>
-                    <h3><a href ='<%=download%>'>Download</a></h3>
-                <% } %>
-                
-                <% if(role != null && role.equals("librarian")) { %>
+            <h2><%=book.getAttribute("title")%><h2>
+
+            <img src="http://lgimages.s3.amazonaws.com/nc-sm.gif"
+                 alt="cover"/>
+
+            <h3>Summary</h3>
+            <p><%=book.getAttribute("summary")%></p>
+
+            <h3>Author</h3>
+            <p><%=book.getAttribute("author")%></p>
+
+            <h3>Year</h3>
+            <p><%=book.getAttribute("year_of_pub").split("-")[0]%></p> 
+
+            <% String download = book.getAttribute("download_link");
+            System.out.println("download:" + download);
+            if( download != null && !download.isEmpty()) { %>
+                <h3><a href ='<%=download%>'>Download</a></h3>
+            <% } if(role != null && role.equals("librarian")) { %>
                 <h3>Is delete ? <%=book.isDeleted()?"yes":"no"%></h3>
+            <% } %>
+
+            <form id="buttonForm" action="./reservation">
+                <input type="hidden" name="book_id" value="<%=book_id%>">
+                <% if (role != null && role.equals("reader") && show_renewal_button) { %>                    
+                    <input type="submit" name="renewal" value="Renew borrowing time"/>
+                <% } else if(role!= null && role.equals("reader") && show_reserve_button) { %>
+                    <input type="submit" name="reservation" value="Make reservation"/>
+                <% } else if(currently_request_for_reservation) {%>
+                <p> Request for reservation is pending...</p>
+                <%} else if(false) {%>
+                <p> Request for renewal is pending...</p>
+                <%} if(role != null && role.equals("librarian")) {%>
+                    <input type="submit" name="update" value="Update this book"/>
+                <% }  if(role != null && role.equals("librarian")) {%>                    
+                    <input type="submit" name="borrow" value="Lend this book"/>
                 <% } %>
-                
-                <form id="buttonForm" action="./reservation">
-                    <input type="hidden" name="book_id" value="<%=book_id%>">
-                    <% if (role!= null && show_renewal_button) { %>                    
-                        <input type="submit" name="renewal" value="Renew borrowing time"/>
-                    <% } else if(role!= null && show_reserve_button) { %>
-                        <input type="submit" name="reservation" value="Make reservation"/>
-                    <% } else if(currently_request_for_reservation) {%>
-                    <p> Request for reservation is pending...</p>
-                    <%} else if(false) {%>
-                    <p> Request for renewal is pending...</p>
-                    <%} if(role != null && role.equals("librarian")) {%>
-                        <input type="submit" name="update" value="Update this book"/>
-                    <% } %>
-                </form>
-                
+            </form>
         </section>
                 
         <section id="reviews">                

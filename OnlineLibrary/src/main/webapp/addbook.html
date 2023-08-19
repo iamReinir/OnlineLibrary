@@ -24,8 +24,17 @@
         </style>
     </head>
     <body>
-        <form action="add" method="POST">       
-            
+<header>
+    <h1><a href="./index">Online Library</a></h1>     
+    <nav id="userActions">                
+        <a href="./profile">Personal profile</a><br/>
+        <a href="./librarian"> Librarian's control panel</a><br/>
+        <a href="./logout" onclick="return confirm('Do you really want to logout?')">Logout</a>
+        <br/>
+    </nav>   
+</header>
+        <h2> Add a book </h2>
+        <form action="add" method="POST">                   
             <label for="title">Title : </label>
             <input id="title" type="text" name="title"/>
             

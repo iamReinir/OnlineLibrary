@@ -29,7 +29,8 @@
                 boolean author_match = b.getAttribute("author")
                                         .toLowerCase()
                                         .contains(searchString.toLowerCase());
-                return title_match || author_match;
+                boolean isbn_match = b.getAttribute("isbn").equals(searchString);
+                return title_match || author_match || isbn_match;
             };
             
             if (searchString != null) {

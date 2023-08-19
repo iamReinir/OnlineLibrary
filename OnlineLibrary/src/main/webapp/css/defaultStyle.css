@@ -18,8 +18,10 @@
 
 html {
     font-size: 20px;
+    font-family: 'Poppins', sans-serif;
     padding: 0;
 }
+
 body {
     margin: 0;
 }
@@ -122,6 +124,7 @@ nav#page span{
     width:2rem;
     text-align: center;
     border: black solid 3px;
+    border-radius:3px;
 }
 nav#page a{
     padding:0.2rem;
@@ -152,14 +155,17 @@ form .searchBar {
     min-height: 60vh;
     padding: 2rem;    
     margin: 2rem;
+    border-radius: 1rem;
 }
 
 #books article {
     background-color: var(--bookPanel);
-    display: flex;
-    border: black solid 2px;
+    display: flex;    
     margin: 0.2rem;
     height: 30vh;
+    border-radius: 1rem;
+    border: black solid 2px;
+    overflow:hidden;
 }
 
 #books article img {
@@ -180,6 +186,10 @@ form .searchBar {
     margin: 2rem;
     padding: 1rem;
     background-color: var(--mainColor);
+}
+
+#book h2{
+    text-align: center;
 }
 
 #book img{
@@ -216,12 +226,14 @@ form .searchBar {
 
 .avatarContainer{
     width:19%;
+    text-align: right;
+    overflow:hidden;
 }
 
 .avatarContainer img{
     margin:1rem;
-    width: 3rem;
-    height:3rem;
+    width: 5rem;
+    height:5rem;
     padding:0;
     border:black solid 2px;
     border-radius: 1rem;

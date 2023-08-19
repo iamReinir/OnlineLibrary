@@ -40,6 +40,7 @@ public class ReservationController extends HttpServlet {
             String reservation = request.getParameter("reservation");
             String renewal = request.getParameter("renewal");
             String update = request.getParameter("update");
+            String iborrow = request.getParameter("borrow");
             String book_id = request.getParameter("book_id");
             String user_id = (String) request.getSession().getAttribute("user_id");
             String user_role = (String) request.getSession().getAttribute("role");
@@ -54,6 +55,11 @@ public class ReservationController extends HttpServlet {
             if (update != null && user_role.equals("librarian")) {
                 response.sendRedirect("./update?book_id=" + book_id);
             }
+
+            if (iborrow != null && user_role.equals("librarian")) {
+                response.sendRedirect("./borrow?book_id=" + book_id);
+            }
+
             boolean result = false;
             if (reservation != null) {
                 System.out.println("Reservation");

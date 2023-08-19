@@ -119,6 +119,7 @@ public class Borrowing implements Entity {
 
     @Override
     public String getAttribute(String attribute_name) {
+        String res = null;
         switch (attribute_name) {
             case "id":
                 return id;

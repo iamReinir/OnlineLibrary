@@ -7,7 +7,7 @@ import model_interface.EntitySet;
 
 /**
  *
- * @author Giga P34
+ * @author Nguyen Xuan Trung Class for integration
  */
 public class UserDAO {
 
@@ -18,7 +18,7 @@ public class UserDAO {
     private UserDAO() {
     }
 
-    public UserDAO(String username, String password) {
+    private UserDAO(String username, String password) {
         //This is for testing
 //        if (username != null && password != null
 //                && username.equals("reinir") && password.equals("reinir")) {
@@ -49,13 +49,13 @@ public class UserDAO {
     public static UserDAO login(String username, String password) {
         UserDAO u = new UserDAO();
         //This is for testing
-        if (username != null && password != null
-                && username.equals("reinir") && password.equals("reinir")) {
-            u.user_id = "0";
-            u.username = "reinir";
-            u.role = "reader";
-            return u;
-        }
+//        if (username != null && password != null
+//                && username.equals("reinir") && password.equals("reinir")) {
+//            u.user_id = "0";
+//            u.username = "reinir";
+//            u.role = "reader";
+//            return u;
+//        }
         //End of testing block
         EntitySet users = EntityFactory.getEntitySet("user");
         Predicate<Entity> check_username_password = (user) -> {

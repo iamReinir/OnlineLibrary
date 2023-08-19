@@ -15,6 +15,12 @@
         <p>Logged in as <%=username%></p>
         <a href="./profile">Personal profile</a>
         <a href="./logout" onclick="return confirm('Do you really want to logout?')">Logout</a>
-        <% }%>
+        <% } %>
+        <% if (role != null && role.equals("librarian")) {%>
+        <p>Logged in as <%=username%> - Librarian privilege</p>
+        <a href="./profile">Personal profile</a>
+        <a href="./librarian"> Librarian's control panel</a>
+        <a href="./logout" onclick="return confirm('Do you really want to logout?')">Logout</a>
+        <% } %>
     </nav>   
 </header>

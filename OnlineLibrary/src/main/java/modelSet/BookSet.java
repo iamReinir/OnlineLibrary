@@ -26,16 +26,16 @@ public class BookSet implements EntitySet {
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 Book b = new Book();
-                b.setId(rs.getString(1));
-                b.setIsbn(rs.getString(2));
-                b.setTitle(rs.getString(3));
-                b.setAuthor(rs.getString(4));
-                b.setYear_of_pub(rs.getString(5));
-                b.setDowload_link(rs.getString(6));
-                b.setAdd_date(rs.getString(7));
-                b.setIs_delete(rs.getString(8));
-                b.setLast_modified_at(rs.getString(9));
-                b.setSummary(rs.getString(10));
+                b.setId(rs.getString("id_BOOK"));
+                b.setIsbn(rs.getString("ISBN"));
+                b.setTitle(rs.getString("title"));
+                b.setAuthor(rs.getString("author"));
+                b.setYear_of_pub(rs.getString("year_of_pub"));
+                b.setDownload_link(rs.getString("download_link"));
+                b.setAdd_date(rs.getString("add_date"));
+                b.setIs_delete(rs.getString("is_delete").equals("1") ? "true" : "false");
+                b.setLast_modified_at(rs.getString("last_modified_at"));
+                b.setSummary(rs.getString("summary"));
                 list.add(b);
             }
         } catch (Exception e) {
@@ -86,7 +86,7 @@ public class BookSet implements EntitySet {
             ps.setString(3, b.getAuthor());
             ps.setString(4, b.getYear_of_pub());
             ps.setString(5, b.getSummary());
-            ps.setString(6, b.getDowload_link());
+            ps.setString(6, b.getDownload_link());
             ps.executeUpdate();
             return true;
         } catch (Exception e) {

@@ -35,7 +35,8 @@ public class ReservationController extends HttpServlet {
             throws ServletException, IOException {
         try {
             PrintWriter out = response.getWriter();
-            //It takes form data, so the value is the button's text
+            // It takes form data, so the value is the button's text.
+            // Will be null if the button is not clicked
             String reservation = request.getParameter("reservation");
             String renewal = request.getParameter("renewal");
             String update = request.getParameter("update");

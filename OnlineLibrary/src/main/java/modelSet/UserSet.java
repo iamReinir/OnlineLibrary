@@ -7,7 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.function.Predicate;
-import model.renewal;
+import model.Renewal;
 import model.User;
 import model_interface.Entity;
 import model_interface.EntitySet;

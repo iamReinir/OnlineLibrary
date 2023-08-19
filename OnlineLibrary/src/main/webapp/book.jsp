@@ -59,15 +59,30 @@
     <body>                             
         <%@include file="WEB-INF/jspf/header.jspf" %>
         <section id="book">
-            <h2><%=book.getAttribute("title")%><h2>
+                <h2><%=book.getAttribute("title")%><h2>
+                
                 <img src="http://lgimages.s3.amazonaws.com/nc-sm.gif"
                      alt="cover"/>
+                
                 <h3>Summary</h3>
                 <p><%=book.getAttribute("summary")%></p>
+                
                 <h3>Author</h3>
                 <p><%=book.getAttribute("author")%></p>
+                
                 <h3>Year</h3>
-                <p><%=book.getAttribute("year_of_pub").split("-")[0]%></p>                        
+                <p><%=book.getAttribute("year_of_pub").split("-")[0]%></p> 
+                
+                <% String download = book.getAttribute("download_link");
+                System.out.println("download:" + download);
+                if( download != null && !download.isEmpty()) { %>
+                    <h3><a href ='<%=download%>'>Download</a></h3>
+                <% } %>
+                
+                <% if(role != null && role.equals("librarian")) { %>
+                <h3>Is delete ? <%=book.isDeleted()?"yes":"no"%></h3>
+                <% } %>
+                
                 <form id="buttonForm" action="./reservation">
                     <input type="hidden" name="book_id" value="<%=book_id%>">
                     <% if (role!= null && show_renewal_button) { %>                    
@@ -82,14 +97,17 @@
                         <input type="submit" name="update" value="Update this book"/>
                     <% } %>
                 </form>
+                
         </section>
-        <section id="reviews">    
+                
+        <section id="reviews">                
             <h2>Reviews and ratings:</h2>
+            
             <% if(role != null) { %>
             <p><a class="clickable"
                 onclick="document.getElementById('review_form')
-                            .style.display = 'block'">
-                    Leave a review</a></p>          
+                            .style.display = 'block'">Leave a review</a></p> 
+            
             <form id="review_form" method="POST" action="./review" style="display:none;" >                
                 <input type="hidden" name="book_id" value="<%=book_id%> "/>
                 <div id="rating_form">
@@ -111,6 +129,7 @@
                     value=""></textarea>
                 <input type="submit" value="Submit"/>
             </form>                
+                
             <% } else { %>              
             <p> Login to leave a review! </p>
             <% }            

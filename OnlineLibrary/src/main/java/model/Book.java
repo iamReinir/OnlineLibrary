@@ -15,16 +15,16 @@ import model_interface.Entity;
  */
 public class Book implements Entity {
 
-    public String id;
-    public String isbn;
-    public String title;
-    public String author;
-    public String year_of_pub;
-    public String dowload_link;
-    public String add_date;
-    public String is_delete = "false";
-    public String last_modified_at;
-    public String summary;
+    public String id = null;
+    public String isbn = null;
+    public String title = null;
+    public String author = null;
+    public String year_of_pub = null;
+    public String download_link = null;
+    public String add_date = null;
+    public String is_delete = null;
+    public String last_modified_at = null;
+    public String summary = null;
 
     public Book() {
     }
@@ -36,7 +36,7 @@ public class Book implements Entity {
         this.title = title;
         this.author = author;
         this.year_of_pub = year_of_pub;
-        this.dowload_link = dowload_link;
+        this.download_link = dowload_link;
         this.add_date = add_date;
         this.is_delete = is_delete;
         this.last_modified_at = last_modified_at;
@@ -83,12 +83,12 @@ public class Book implements Entity {
         this.year_of_pub = year_of_pub;
     }
 
-    public String getDowload_link() {
-        return dowload_link;
+    public String getDownload_link() {
+        return download_link;
     }
 
-    public void setDowload_link(String dowload_link) {
-        this.dowload_link = dowload_link;
+    public void setDownload_link(String download_link) {
+        this.download_link = download_link;
     }
 
     public String getAdd_date() {
@@ -157,8 +157,8 @@ public class Book implements Entity {
                 return author;
             case "year_of_pub":
                 return year_of_pub;
-            case "dowload_link":
-                return dowload_link;
+            case "download_link":
+                return download_link;
             case "add_date":
                 return add_date;
             case "is_delete":
@@ -203,8 +203,8 @@ public class Book implements Entity {
             case "year_of_pub":
                 year_of_pub = value;
                 break;
-            case "dowload_link":
-                dowload_link = value;
+            case "download_link":
+                download_link = value;
                 break;
             case "add_date":
                 add_date = value;

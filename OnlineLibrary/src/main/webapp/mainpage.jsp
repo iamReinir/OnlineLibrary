@@ -9,11 +9,20 @@
     pageEncoding="UTF-8" 
     import="model_interface.*, java.util.function.Predicate" %>
  <% 
-            String searchString = (String) request.getParameter("query");                        
-            Entity[] books = null;
+            String searchString = (String) request.getParameter("query");                              
+            Entity[] books = null;            
+            int curpage = 1;
+            int maxpage = 0;
+            int book_per_page = 5;
+            try{
+                curpage = Integer.parseInt((String)request.getParameter("page"));
+            } catch(Exception ex) {
+                curpage = 1;
+            }
+            if(curpage < 1)request.getRequestDispatcher("./notfound.html");
             
             //function : search book based on title and author
-            Predicate<Entity> title_n_author_search = (b)->{
+            Predicate<Entity> title_n_author_search = (b)->{                
                 boolean title_match = b.getAttribute("title")
                                         .toLowerCase()
                                         .contains(searchString.toLowerCase());
@@ -29,6 +38,7 @@
             } else {
                 books = EntityFactory.getEntitySet("book").all();
             }
+           maxpage = (int) Math.floor(books.length / book_per_page) + 1;
 %>
 <!DOCTYPE html>
 <html>
@@ -39,21 +49,30 @@
     <body>     
        
         <%@ include file="WEB-INF/jspf/header.jspf" %>
-        <form id="bookSearchBar">
+        <form id="bookSearchBar" action="./index">
             <input type="text" 
                    name="query" 
                    placeholder="Search for a book..."                    
                    value="<%=searchString!=null?searchString:""%>"                   
-                   class="searchBar"/>
+                   class="searchBar"/>        
         </form>
-        <nav id="booksNav">            
+        <nav id="page">
+            <a href ="./index?query=<%=searchString!=null?searchString:""%>&page=<%=curpage-1%>"
+            <% if(curpage == 1) { %> class='inactive' <% } %>            
+            > Previous </a>                     
+            <span><%=curpage%></span>
+            <a href ="./index?query=<%=searchString!=null?searchString:""%>&page=<%=curpage+1%>"
+            <% if(curpage >= maxpage) { %> class='inactive' <% } %>            
+            > Next </a> 
         </nav>
-        <section id="books">
-            <% if(books == null || books.length == 0){ %>
-                <h3>No book to show....</h3>
-            <% }
-            for (int i = 0; i < books.length; ++i) {
-                String bookid = books[i].getAttribute("id");
+        <section id="books">            
+            <% int bookCount = 0;
+            for (int i = book_per_page * (curpage-1); i < books.length; ++i) {
+                if(books[i].isDeleted() && (role == null || role.equals("reader")))
+                    continue;
+                if(bookCount >= book_per_page) break;                
+                String bookid = books[i].getAttribute("id");    
+                ++ bookCount;
             %>            
                 <article id="bookid_<%=bookid%>"
                         class="clickable"
@@ -67,7 +86,10 @@
                         <%=books[i].getAttribute("summary")%> <br/>                                                 
                     </summary>
                 </article>                
-            <%}%>            
+            <%}%>         
+            <% if(bookCount == 0){ %>
+                <h3>No book to show....</h3>
+            <% } %>
         </section>
         <%@include file="WEB-INF/jspf/footer.jspf" %>
         <script <script src="js/defaultStyle.js"></script>        

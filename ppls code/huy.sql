@@ -63,7 +63,7 @@ CREATE TABLE library.review (
 CREATE TABLE library.renewal (
   `renewal_id` INT PRIMARY KEY AUTO_INCREMENT,
   `borrow_id` INT NOT NULL,
-  `is_accept` BOOLEAN,
+  `is_accept` BOOLEAN DEFAULT false,
   `accept_librarian_id` INT,
   `request_date` DATETIME DEFAULT CURRENT_TIMESTAMP,
   `accept_date` DATETIME,

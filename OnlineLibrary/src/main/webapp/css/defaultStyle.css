@@ -4,7 +4,8 @@
 */
 
 :root {
-    --mainColor: #edf4c9;
+    --oldMainColor: #edf4c9;
+    --mainColor: rgba(210, 251, 243, 1);
     --activeMain: #a0a0a0;
     --headerNfooter: #acacac;
     --bookPanel: #ffffff;
@@ -109,8 +110,31 @@ footer h2 {
 /* End of header/footer styling */
 
 #bookSearchBar {
-    display: flex;
+    padding: 2rem;
 }
+nav#page{
+    display:flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+nav#page span{
+    width:2rem;
+    text-align: center;
+    border: black solid 3px;
+}
+nav#page a{
+    padding:0.2rem;
+}
+
+nav#page a.inactive{
+    text-decoration: none;
+    color:var(--faded);
+    cursor: default;
+    pointer-events: none;
+}
+
+
 
 form .searchBar {
     padding: 0.5rem;
@@ -123,9 +147,10 @@ form .searchBar {
 }
 
 #books {
-    min-height: 60vh;
-    padding: 2rem;
     background-color: var(--mainColor);
+    background-image: linear-gradient(-30deg, rgba(210, 251, 243, 1), white);
+    min-height: 60vh;
+    padding: 2rem;    
     margin: 2rem;
 }
 
@@ -165,7 +190,7 @@ form .searchBar {
 
 #buttonForm input{
     font-size: 1rem;
-    width:30%;
+    width: 30%;
 }
 
 #review_form{
@@ -213,6 +238,16 @@ form .searchBar {
     flex-direction: row-reverse;
 }
 
+#reviews a{
+    font-size:2rem;
+}
+#review_form input{
+    font-size:2rem;
+    display: box;
+    margin:auto;
+    padding:0.2rem 2rem;
+}
+
 
 
 label.fa-star{
@@ -236,3 +271,4 @@ span.rating{
 input.star{
     display:none;
 }
+

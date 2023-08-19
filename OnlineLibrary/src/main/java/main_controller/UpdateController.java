@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
- */
 package main_controller;
 
 import java.io.IOException;
@@ -16,7 +12,7 @@ import model_interface.EntityFactory;
 
 /**
  *
- * @author Giga P34
+ * @author Nguyen Xuan Trung
  */
 @WebServlet(name = "UpdateController", urlPatterns = {"/update"})
 public class UpdateController extends HttpServlet {
@@ -64,6 +60,7 @@ public class UpdateController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
         boolean result = true;
         String book_id = request.getParameter("book_id");
         String title = request.getParameter("title");
@@ -71,6 +68,7 @@ public class UpdateController extends HttpServlet {
         String author = request.getParameter("author");
         String year = request.getParameter("year_of_pub");
         String summary = request.getParameter("summary");
+        String download_link = request.getParameter("download_link");
         boolean delete = request.getParameter("delete") != null;
         Entity book = EntityFactory.getEntitySet("book").getEntity(book_id);
         result = result && book.setAttribute("title", title);
@@ -78,6 +76,7 @@ public class UpdateController extends HttpServlet {
         result = result && book.setAttribute("author", author);
         result = result && book.setAttribute("summary", summary);
         result = result && book.setAttribute("year_of_pub", year);
+        result = result && book.setAttribute("download_link", download_link);
         result = result && book.delete(delete);
         try ( PrintWriter out = response.getWriter()) {
             out.print("<script>");
@@ -86,7 +85,7 @@ public class UpdateController extends HttpServlet {
             } else {
                 out.print("alert('Update failed! Contact the admin for support!');");
             }
-            out.print("window.location.href = './index'l </script>");
+            out.print("window.location.href = './index'; </script>");
         }
     }
 

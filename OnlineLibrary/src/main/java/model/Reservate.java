@@ -144,8 +144,7 @@ public class Reservate implements Entity {
     public boolean setAttribute(String attribute_name, String value) {
         switch (attribute_name) {
             case "id":
-                id = value;
-                break;
+                return false;
             case "user_id":
                 user_id = value;
                 break;

@@ -33,6 +33,9 @@ public interface Entity {
     String getAttribute(String attribute_name);
 
     /**
+     * This method will change the value of the corresponding record, if the
+     * Entity is linked with a database record. Will only change the object
+     * value otherwise
      *
      * @param attribute_name : column to change
      * @param value : change to this value
@@ -61,7 +64,7 @@ public interface Entity {
     /**
      *
      * @param is_delete : whether this Entity is marked as deleted
-     * @return True if there is change. False if there is no change.
+     * @return True if update is success
      */
     boolean delete(boolean is_delete);
 }

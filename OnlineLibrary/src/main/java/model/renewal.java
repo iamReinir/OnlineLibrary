@@ -1,29 +1,28 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package model;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import modelSet.DatabaseUser;
 import model_interface.Entity;
 
 /**
  *
- * @author PC
+ * @author Ho Quoc Huy
  */
-public class renewal implements Entity{
-    public String id;
-    public String borrow_id;
-    public String is_accept;
-    public String accept_librarian_id;
-    public String request_date;
-    public String accept_date;
-    public String is_delete = "false";
-    public String last_modified_at;
+public class Renewal implements Entity {
+    public String id = null;
+    public String borrow_id = null;
+    public String is_accept = null;
+    public String accept_librarian_id = null;
+    public String request_date = null;
+    public String accept_date = null;
+    public String is_delete = null;
+    public String last_modified_at = null;
 
-    public renewal() {
+    public Renewal() {
     }
 
-    public renewal(String id, String borrow_id, String is_accept, String accept_librarian_id, String request_date, String accept_date, String last_modified_at) {
+    public Renewal(String id, String borrow_id, String is_accept, String accept_librarian_id, String request_date, String accept_date, String last_modified_at) {
         this.id = id;
         this.borrow_id = borrow_id;
         this.is_accept = is_accept;
@@ -136,20 +135,27 @@ public class renewal implements Entity{
             case "last_modified_at":
                 return last_modified_at;
             default:
-                return "------ I’m sorry but I’m not sure what you’re asking for. "
-                        + "Could you please clarify your request? "
-                        + "If you’re looking for a summary of a user, "
-                        + "I suggest you provide me with the id "
-                        + "so I can help you better.\n";
+                return null;
         }
     }
 
+    private boolean update(String attr_name, String value) {
+        Connection con = DatabaseUser.getConnection();
+        try {
+            PreparedStatement stmt = con.prepareStatement("UPDATE book SET " + attr_name + "=? WHERE id_BOOK=?");
+            stmt.setString(1, value);
+            stmt.setString(2, id);
+            stmt.execute();
+            return true;
+        } catch (Exception ex) {
+            return false;
+        }
+    }
     @Override
     public boolean setAttribute(String attribute_name, String value) {
         switch (attribute_name) {
             case "id":
-                id = value;
-                break;
+                return false; //Cannot change id of a record                
             case "borrow_id":
                 borrow_id = value;
                 break;
@@ -166,14 +172,14 @@ public class renewal implements Entity{
                 accept_date = value;
                 break;
             case "is_delete":
-                is_delete = value;
-                break;
+                return false; // This is updated via the delete() method
             case "last_modified_at":
                 last_modified_at = value;
                 break;
             default:
                 return false;
         }
+        update(attribute_name, value);
         return true;
     }
 

@@ -1,0 +1,20 @@
+<%@ page pageEncoding="UTF-8" %>
+
+<header>
+    <%
+        String role = (String) session.getAttribute("role");
+        String username = (String) session.getAttribute("username");        
+    %>
+    <h1><a href="./index">Online Library<a/></h1>     
+    <nav id="userActions">        
+        <% if (role == null || role.equals("quest")) { %>
+        <a href="./login">Login</a>
+        <a href="./register">Register</a>
+        <% } %>
+        <% if (role != null && role.equals("reader")) {%>
+        <p>Logged in as <%=username%></p>
+        <a href="./profile">Personal profile</a>
+        <a href="./logout" onclick="return confirm('Do you really want to logout?')">Logout</a>
+        <% }%>
+    </nav>   
+</header>

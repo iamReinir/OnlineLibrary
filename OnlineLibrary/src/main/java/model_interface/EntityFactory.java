@@ -49,7 +49,7 @@ public class EntityFactory {
             case "borrowing":
                 return new Borrowing();
             case "renewal":
-                return new renewal();
+                return new Renewal();
             case "reservation":
                 return new Reservate();
             case "user":

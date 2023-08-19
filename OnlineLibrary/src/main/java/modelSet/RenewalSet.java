@@ -12,7 +12,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.function.Predicate;
 import model.Borrowing;
-import model.renewal;
+import model.Renewal;
 import model_interface.Entity;
 import model_interface.EntitySet;
 
@@ -21,7 +21,7 @@ import model_interface.EntitySet;
  * @author PC
  */
 public class RenewalSet implements EntitySet {
-    ArrayList<renewal> list;
+    ArrayList<Renewal> list;
     private String dbUrl = "jdbc:mysql://localhost:3306/library?zeroDateTimeBehavior=CONVERT_TO_NULL";
     private String dbUname = "root";
     private String dbPassword = "Trung123";
@@ -56,7 +56,7 @@ public class RenewalSet implements EntitySet {
         try {
             PreparedStatement ps = con.prepareStatement(query);
             ResultSet rs = ps.executeQuery();
-            renewal r = new renewal();
+            Renewal r = new Renewal();
             r.setId(rs.getString(1));
             r.setBorrow_id(rs.getString(2));
             r.setIs_accept(rs.getString(3));
@@ -98,7 +98,7 @@ public class RenewalSet implements EntitySet {
     }
 
     
-    public boolean add(renewal r) {
+    public boolean add(Renewal r) {
         loadDriver(dbDriver);
         Connection con = getConnection();
 	String sql = "insert into library.renewal values(?,?,?,?,?,?,?,?)";

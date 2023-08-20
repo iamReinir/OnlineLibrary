@@ -11,14 +11,30 @@ import java.util.Date;
  * @author Lenovo
  */
 public class Reservation {
-    private String id;
-    private String user_id;
-    private String book_id;
-    private String is_accept;
-    private String request_date;
-    private String accept_date;
-    private boolean is_delete;
-    private String last_modified_at;
+    private String id = null;
+    private String user_id = null;
+    private String book_id = null;
+    private String is_accept = null;
+    private String request_date = null;
+    private String accept_date = null;
+    private boolean is_delete = false;
+    private String last_modified_at = null;
+
+    public String userName;
+    public String bookName;
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public String getBookName() {
+        return bookName;
+    }
+
+    public Reservation(String user_id, String book_id) {
+        this.user_id = user_id;
+        this.book_id = book_id;
+    }
 
     public Reservation() {
     }
@@ -32,6 +48,11 @@ public class Reservation {
         this.accept_date = accept_date;
         this.is_delete = is_delete;
         this.last_modified_at = last_modified_at;
+        if (id != null) {
+            bookName = ReservationDAO.bookNameOf(this);
+            userName = ReservationDAO.usernameOf(this);
+        }
+
     }
 
     public String getId() {

@@ -21,14 +21,38 @@
                 width: 30rem;
                 height: 10rem;
             }
+            select, input[type="text"], input[type="password"] {
+                width: 100%;
+                padding: 0.5rem;
+                margin-bottom: 1rem;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+                font-size: 1rem;
+            }
+
+            input[type="submit"] {
+                background-color: #007bff;
+                color: white;
+                border: none;
+                padding: 0.5rem 0.5rem;
+                border-radius: 4px;
+                cursor: pointer;
+                font-size: 1rem;
+            }
+
+            input[type="submit"]:hover {
+                background-color: #0056b3;
+            }
+            form,h1,h2{
+                margin:2rem;
+            }
         </style>
     </head>
     <body>
 <header>
     <h1><a href="./index">Online Library</a></h1>     
-    <nav id="userActions">                
-        <a href="./profile">Personal profile</a><br/>
-        <a href="./librarian"> Librarian's control panel</a><br/>
+    <nav id="userActions">                        
+        <a href="./librarian"> Control panel</a><br/>
         <a href="./logout" onclick="return confirm('Do you really want to logout?')">Logout</a>
         <br/>
     </nav>   
@@ -50,7 +74,7 @@
             <br/><label for='download_link'>Download link:</label>
             <input id="download_link" type='text' name="download_link"/>
             
-            <br/><label for="summary">Summary : </label>
+            <br/><label for="summary">Summary : </label> <br/>
             <textarea 
                     id="summary"
                     style="resize:none;"

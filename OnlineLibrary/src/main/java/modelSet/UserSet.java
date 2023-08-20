@@ -17,6 +17,10 @@ public class UserSet implements EntitySet {
 
     ArrayList<User> list = new ArrayList<>();
 
+    public ArrayList<User> getList() {
+        return list;
+    }
+
     public UserSet() {
         Connection con = DatabaseUser.getConnection();
         String query = "select * from library.user";

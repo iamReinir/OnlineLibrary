@@ -44,9 +44,36 @@
                 width: 30rem;
                 height: 10rem;
             }
+            select, input[type="text"], input[type="password"] {
+                width: 100%;
+                padding: 0.5rem;
+                margin-bottom: 1rem;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+                font-size: 1rem;
+            }
+
+            input[type="submit"] {
+                background-color: #007bff;
+                color: white;
+                border: none;
+                padding: 0.5rem 0.5rem;
+                border-radius: 4px;
+                cursor: pointer;
+                font-size: 1rem;
+            }
+
+            input[type="submit"]:hover {
+                background-color: #0056b3;
+            }
+            form,h1,h2{
+                margin:2rem;
+            }
+            
         </style>
     </head>
     <body>
+        <%@include file="WEB-INF/jspf/header.jspf" %>
         <h1><%=book.getAttribute("title")%></h1>
           <h2>id=<%=book.getAttribute("id")%></h2>
         <form action="./update" method="POST">
@@ -61,7 +88,7 @@
             <input id="isbn" type="text" name="isbn" 
                    value="<%=book.getAttribute("isbn")%>"/>
             
-            <br/><label for="author">author :</label>
+            <br/><label for="author">Author :</label>
             <input id="author" type="text" name="author" 
                    value="<%=book.getAttribute("author")%>"/>
             
@@ -73,7 +100,7 @@
             <input id="download_link" type='text' name="download_link"
                    value="<%=book.getAttribute("download_link")%>"/>
             
-            <br/><label for="summary">Summary : </label>
+            <br/><label for="summary">Summary : </label><br/>
             <textarea 
                     id="summary"
                     style="resize:none;"
@@ -81,7 +108,8 @@
             <br/><input type="checkbox" name="delete" value="true" id="delete"
                         <%=book.isDeleted()?"checked" :""%>>
             <label for="delete">Mark as delete</label><br/>
-            <input type="submit" value="submit"/>            
+            <input type="submit" value="Update"/>            
         </form>
+            <script src="js/defaultStyle.js"></script>
     </body>
 </html>

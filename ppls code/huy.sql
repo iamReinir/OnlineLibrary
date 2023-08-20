@@ -16,7 +16,7 @@ CREATE TABLE library.book(
 
 CREATE TABLE library.user(
   `id_user` INT PRIMARY KEY AUTO_INCREMENT,
-  `username` VARCHAR(255) NOT NULL,
+  `username` VARCHAR(255) NOT NULL UNIQUE,
   `password` VARCHAR(50) NOT NULL,
   `email` VARCHAR(50),
   `telephone_number` CHAR(10),
@@ -99,3 +99,4 @@ alter table library.renewal add constraint FK_RENEWAL_BORROW
 -- GRANT DELETE,UPDATE,SELECT,INSERT ON library.borrowing TO onlLib@'%';
 -- GRANT DELETE,UPDATE,SELECT,INSERT ON library.review TO onlLib@'%';
 -- GRANT DELETE,UPDATE,SELECT,INSERT ON library.renewal TO onlLib@'%';
+

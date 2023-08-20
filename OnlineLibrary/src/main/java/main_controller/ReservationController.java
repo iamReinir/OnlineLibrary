@@ -1,19 +1,27 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
+ */
 package main_controller;
 
+import DAO.Reservation;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.util.ArrayList;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model_interface.Entity;
+import model_interface.EntityFactory;
 
 /**
  *
- * @author Giga P34
+ * @author Nguyen Thuy
  */
-@WebServlet(name = "BookReservationServlet", urlPatterns = {"/reservation"})
-public class BookReservationServlet extends HttpServlet {
+@WebServlet(name = "ReservationController", urlPatterns = {"/reservation"})
+public class ReservationController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -27,18 +35,28 @@ public class BookReservationServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try ( PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet BookReservationServlet</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet BookReservationServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+        // Tạo một danh sách (ArrayList) chứa thông tin người đặt trước
+        ArrayList<Reservation> reservations = new ArrayList<>();
+        Entity[] dbReservate = EntityFactory.getEntitySet("reservation").all();
+        for (Entity e : dbReservate) {
+            reservations.add(new Reservation(e.getAttribute("id"),
+                    e.getAttribute("user_id"),
+                    e.getAttribute("book_id"),
+                    e.getAttribute("is_accept"),
+                    e.getAttribute("request_date"),
+                    e.getAttribute("accept_date"),
+                    e.isDeleted(),
+                    e.getAttribute("last_modified_at"))
+            );
         }
+        // Thêm các thông tin đặt trước khác vào danh sách
+
+        // Truyền danh sách vào trang JSP
+        request.setAttribute("reservations", reservations);
+
+        // Forward yêu cầu sang trang JSP
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/reservation.jsp");
+        dispatcher.forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -65,18 +83,9 @@ public class BookReservationServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String title = request.getParameter("title");
-        String author = request.getParameter("author");
-        String email = request.getParameter("email");
-
-        // Ở đây,  có thể thêm mã để lưu thông tin đặt trước vào cơ sở dữ liệu
-        response.setContentType("text/html");
-        response.getWriter().println("<h2>Your request has been recorded!</h2>");
-        response.getWriter().println("<p>Reservation infomation:</p>");
-        response.getWriter().println("<p>Title: " + title + "</p>");
-        response.getWriter().println("<p>Author: " + author + "</p>");
-        response.getWriter().println("<p>Email: " + email + "</p>");
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        processRequest(request, response);
     }
 
     /**

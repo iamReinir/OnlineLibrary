@@ -1,5 +1,6 @@
 package DAO;
 
+import java.util.ArrayList;
 import java.util.function.Predicate;
 import model_interface.Entity;
 import model_interface.EntityFactory;
@@ -89,6 +90,7 @@ public class UserDAO {
         }
     }
 
+    // normal user sign-up uses this
     public static boolean signup(String username, String password, String email, String role) {
         EntitySet users = EntityFactory.getEntitySet("user");
         Entity newUser = EntityFactory.createEntity("user");
@@ -97,5 +99,27 @@ public class UserDAO {
         newUser.setAttribute("email", email);
         newUser.setAttribute("role", role);
         return users.add(newUser);
+    }
+
+    // Admin user add uses this
+    public static boolean signup(String username, String password, String email, String phoneNum, String role) {
+        EntitySet users = EntityFactory.getEntitySet("user");
+        Entity newUser = EntityFactory.createEntity("user");
+        newUser.setAttribute("username", username);
+        newUser.setAttribute("password", password);
+        newUser.setAttribute("email", email);
+        newUser.setAttribute("telephone_number", phoneNum);
+        newUser.setAttribute("role", role);
+        return users.add(newUser);
+    }
+
+    public static boolean removeUser(String username) {
+        Entity[] users = EntityFactory.getEntitySet("user").searchResult(u -> {
+            return u.getAttribute("username").equals(username);
+        });
+        if (users.length != 1) {
+            return false;
+        }
+        return users[0].delete(true);
     }
 }

@@ -1,5 +1,8 @@
 package model;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import modelSet.DatabaseUser;
 import model_interface.Entity;
 
 /**
@@ -203,7 +206,17 @@ public class User implements Entity {
     @Override
     public boolean delete(boolean is_delete) {
         this.is_delete = (is_delete ? "true" : "false");
-        return is_delete;
+        Connection con = DatabaseUser.getConnection();
+        try {
+            PreparedStatement stmt = con.prepareStatement("UPDATE user SET is_delete=? WHERE id_user=?");
+            stmt.setBoolean(1, is_delete);
+            stmt.setString(2, id);
+            stmt.execute();
+            return true;
+        } catch (Exception ex) {
+            return false;
+        }
+
     }
 
     @Override

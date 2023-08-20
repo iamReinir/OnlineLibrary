@@ -30,9 +30,10 @@
     />
   </head>
 <body>
+    <%@include  file="WEB-INF/jspf/header.jspf" %>
     <div class="wrapper">
         <div class="profile">
-          <a class="back" href="home"><i class="bi bi-house-door"></i> Back home</a>
+          <a class="back" href="index"><i class="bi bi-house-door"></i> Back home</a>
           <div class="content">
             <button onclick="window.location.href='profile/borrow'">Borrow list</button>
             <button onclick="window.location.href='profile/history'">Borrow History</button>
@@ -40,5 +41,6 @@
           </div>
         </div>
       </div>
+    <<script src="js/defaultStyle.js"></script>
 </body>
 </html>

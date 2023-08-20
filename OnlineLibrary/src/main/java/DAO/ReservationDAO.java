@@ -4,16 +4,14 @@
  */
 package DAO;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Date;
 import model_interface.Entity;
 import model_interface.EntityFactory;
 
 /**
  *
- * @author Lenovo
+ * @author Huynh Thai Duong
  */
 public class ReservationDAO {
 
@@ -37,5 +35,23 @@ public class ReservationDAO {
         }
         return list;
     }
-    
+
+    // Author : Nguyen Xuan Trung
+    // Method for integration
+    public static String usernameOf(Reservation re) {
+        Entity bdReservate = EntityFactory.getEntitySet("reservation").getEntity(re.getId());
+        return EntityFactory
+                .getEntitySet("user")
+                .getEntity(bdReservate.getAttribute("user_id"))
+                .getAttribute("username");
+    }
+
+    public static String bookNameOf(Reservation re) {
+        Entity bdReservate = EntityFactory.getEntitySet("reservation").getEntity(re.getId());
+        return EntityFactory
+                .getEntitySet("book")
+                .getEntity(bdReservate.getAttribute("book_id"))
+                .getAttribute("title");
+    }
+
 }

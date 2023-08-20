@@ -18,7 +18,8 @@
         <% } %>
         <% if (role != null && role.equals("librarian")) {%>
         <p>Logged in as <%=username%> <br/> Librarian privilege</p>        
-        <a href="./librarian"> Control panel</a>
+        <a href="./addbook.html">Add a new book</a>
+        <a href="./reservation">View all reservation requests</a>
         <a href="./logout" onclick="return confirm('Do you really want to logout?')">Logout</a>
         <% } %>
     </nav>   

@@ -1,5 +1,8 @@
 package model;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import modelSet.DatabaseUser;
 import model_interface.Entity;
 
 /**
@@ -142,17 +145,32 @@ public class Borrowing implements Entity {
         }
     }
 
+    private boolean update(String attr_name, String value) {
+        Connection con = DatabaseUser.getConnection();
+        try {
+            PreparedStatement stmt = con.prepareStatement("UPDATE borrowing SET " + attr_name + "=? WHERE id_BOOK=?");
+            stmt.setString(1, value);
+            stmt.setString(2, id);
+            stmt.execute();
+            return true;
+        } catch (Exception ex) {
+            return false;
+        }
+    }
+
     @Override
     public boolean setAttribute(String attribute_name, String value) {
+        String attr = attribute_name;
         switch (attribute_name) {
             case "id":
-                id = value;
+                // cannot change a record's id
                 break;
             case "borrower_id":
                 borrower_id = value;
                 break;
             case "borrowed_book":
                 borrowed_book = value;
+                attr = "id_BOOK"; // the column in database is different
                 break;
             case "start_date":
                 start_date = value;
@@ -167,29 +185,44 @@ public class Borrowing implements Entity {
                 last_modified_at = value;
                 break;
             case "is_delete":
-                is_delete = value;
+                // update via the delete() method
                 break;
             default:
                 return false;
+        }
+        if (id != null) {
+            return update(attr, value);
         }
         return true;
     }
 
     @Override
     public boolean setAttributes(String[] attribute_names, String[] values) {
-        if(attribute_names.length == values.length){
-            for(int i = 0; i <= attribute_names.length; i++){
-                attribute_names[i] = values[i];
-                return true;
+        for (int i = 0; i <= attribute_names.length; i++) {
+            if (!setAttribute(attribute_names[i], values[i])) {
+                return false;
             }
         }
-        return false;
+        return true;
     }
 
     @Override
     public boolean delete(boolean is_delete) {
         this.is_delete = (is_delete ? "true" : "false");
-        return is_delete;
+        if (id == null) {
+            return true;
+        }
+        Connection con = DatabaseUser.getConnection();
+        try {
+            PreparedStatement stmt = con
+                    .prepareStatement("UPDATE borrowing SET is_delete=? WHERE borrow_id=?");
+            stmt.setBoolean(1, is_delete);
+            stmt.setString(2, id);
+            stmt.execute();
+            return true;
+        } catch (Exception ex) {
+            return false;
+        }
     }
 
     @Override

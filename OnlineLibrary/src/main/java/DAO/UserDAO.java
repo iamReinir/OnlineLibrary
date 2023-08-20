@@ -6,8 +6,9 @@ import model_interface.EntityFactory;
 import model_interface.EntitySet;
 
 /**
+ * Class for integration
  *
- * @author Nguyen Xuan Trung Class for integration
+ * @author Nguyen Xuan Trung
  */
 public class UserDAO {
 

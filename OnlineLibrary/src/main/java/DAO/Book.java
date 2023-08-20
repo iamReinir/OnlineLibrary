@@ -17,15 +17,15 @@ public class Book {
     private String author;
     private int year_of_pub;
     private String download_link;
-    private Date add_date;
+    private String add_date;
     private boolean is_delete;
-    private Date last_modified_at;
+    private String last_modified_at;
     private String summary;
 
     public Book() {
     }
 
-    public Book(int id, String ISBN, String title, String author, int year_of_pub, String download_link, Date add_date, boolean is_delete, Date last_modified_at, String summary) {
+    public Book(int id, String ISBN, String title, String author, int year_of_pub, String download_link, String add_date, boolean is_delete, String last_modified_at, String summary) {
         this.id = id;
         this.ISBN = ISBN;
         this.title = title;
@@ -86,11 +86,11 @@ public class Book {
         this.download_link = download_link;
     }
 
-    public Date getAdd_date() {
+    public String getAdd_date() {
         return add_date;
     }
 
-    public void setAdd_date(Date add_date) {
+    public void setAdd_date(String add_date) {
         this.add_date = add_date;
     }
 
@@ -102,11 +102,11 @@ public class Book {
         this.is_delete = is_delete;
     }
 
-    public Date getLast_modified_at() {
+    public String getLast_modified_at() {
         return last_modified_at;
     }
 
-    public void setLast_modified_at(Date last_modified_at) {
+    public void setLast_modified_at(String last_modified_at) {
         this.last_modified_at = last_modified_at;
     }
 

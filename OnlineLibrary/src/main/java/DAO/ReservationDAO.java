@@ -4,7 +4,7 @@
  */
 package DAO;
 
-import java.text.DateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Date;
@@ -23,15 +23,16 @@ public class ReservationDAO {
             return br.getAttribute("user_id").equals(String.valueOf(id));
         });
         for (Entity e : reservation) {
+            System.out.println(e.getAttribute("request_date"));
             list.add(new Reservation(
-                    Integer.parseInt(e.getAttribute("id")),
-                    Integer.parseInt(e.getAttribute("user_id")),
-                    Integer.parseInt(e.getAttribute("book_id")),
-                    e.getAttribute("is_accept").equals("true"),
-                    new Date(Date.parse(e.getAttribute("request_date"))),
-                    new Date(Date.parse(e.getAttribute("accept_date"))),
+                    e.getAttribute("id"),
+                    e.getAttribute("user_id"),
+                    e.getAttribute("book_id"),
+                    e.getAttribute("is_accept"),
+                    e.getAttribute("request_date"),
+                    e.getAttribute("accept_date"),
                     e.isDeleted(),
-                    new Date(Date.parse(e.getAttribute("last_modified_at")))
+                    e.getAttribute("last_modified_at")
             ));
         }
         return list;

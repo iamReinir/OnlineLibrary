@@ -31,24 +31,31 @@
     Predicate<Entity> user_is_borrowing_this = (borrowing) ->{
         boolean same_user = borrowing.getAttribute("borrower_id").equals(user_id);
         boolean same_book = borrowing.getAttribute("borrowed_book").equals(book_id);
-        return same_user && same_book;
+        return same_user && same_book && !borrowing.isDeleted();
     };    
     Predicate<Entity> user_has_reserve_this = (reserve) -> {
         boolean same_user = reserve.getAttribute("user_id").equals(user_id);
         boolean same_book = reserve.getAttribute("book_id").equals(book_id);
-        return same_user && same_book;
+        return same_user && same_book && !reserve.isDeleted();
     }; 
+    Predicate<Entity> borrowed_book_of_this_id = (borrowing) ->{
+        return borrowing.getAttribute("borrowed_book").equals(book_id) 
+                && !borrowing.isDeleted();        
+    };
     
     // Get data
     Entity[] reviews = EntityFactory.getEntitySet("review")
             .searchResult(searchForBook);
     boolean isBorrowing = EntityFactory.getEntitySet("borrowing")
              .searchResult(user_is_borrowing_this).length > 0;
+    
     boolean currently_request_for_reservation = EntityFactory.getEntitySet("reservation")
             .searchResult(user_has_reserve_this).length > 0;
     boolean show_reserve_button = !currently_request_for_reservation 
             && !isBorrowing;            
     boolean show_renewal_button = isBorrowing;
+    boolean is_borrowed_by_anyuser = isBorrowing || EntityFactory.getEntitySet("borrowing")
+             .searchResult(borrowed_book_of_this_id).length > 0;
 %>
 <!DOCTYPE html>
 <html>    
@@ -71,7 +78,7 @@
             <p><%=book.getAttribute("author")%></p>
 
             <h3>Year</h3>
-            <p><%=book.getAttribute("year_of_pub").split("-")[0]%></p> 
+            <p><%=book.getAttribute("year_of_pub")%></p> 
 
             <% String download = book.getAttribute("download_link");
             System.out.println("download:" + download);
@@ -81,7 +88,7 @@
                 <h3>Is delete ? <%=book.isDeleted()?"yes":"no"%></h3>
             <% } %>
 
-            <form id="buttonForm" action="./reservation">
+            <form id="buttonForm" action="./request">
                 <input type="hidden" name="book_id" value="<%=book_id%>">
                 <% if (role != null && role.equals("reader") && show_renewal_button) { %>                    
                     <input type="submit" name="renewal" value="Renew borrowing time"/>
@@ -93,8 +100,12 @@
                 <p> Request for renewal is pending...</p>
                 <%} if(role != null && role.equals("librarian")) {%>
                     <input type="submit" name="update" value="Update this book"/>
-                <% }  if(role != null && role.equals("librarian")) {%>                    
+                <% }  if(role != null && role.equals("librarian") 
+                                && !book.isDeleted() && !is_borrowed_by_anyuser) {%>                    
                     <input type="submit" name="borrow" value="Lend this book"/>
+                <% }  if(role != null && role.equals("librarian") 
+                                && !book.isDeleted() && is_borrowed_by_anyuser) {%>                    
+                    <input type="submit" name="return" value="This book is returned"/>
                 <% } %>
             </form>
         </section>

@@ -55,9 +55,10 @@ public class AddBookController extends HttpServlet {
             out.print("<script>");
             if (MethodBook.Addbook(isbn, title, author, year, summary, download_link)) {
                 out.print("alert('Add successfully!');");
+                out.print("window.location.href = './index';");
             } else
                 out.print("alert('Add failed! Contact your administrator for support!');");
-            out.print("window.location.href = './index';");
+
             out.print("</script>");
         }
     }

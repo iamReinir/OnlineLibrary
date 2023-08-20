@@ -1,13 +1,13 @@
 package modelSet;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.text.DateFormat;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.function.Predicate;
-import model.Book;
 import model.Borrowing;
 import model_interface.Entity;
 import model_interface.EntitySet;
@@ -34,7 +34,7 @@ public class BorrowingSet implements EntitySet {
                 b.setDue_date(rs.getString(5));
                 b.setReturn_date(rs.getString(6));
                 b.setLast_modified_at(rs.getString(7));
-                b.setIs_delete(rs.getString(8));
+                b.setIs_delete(rs.getString(8).equals("1") ? "true" : "false");
                 list.add(b);
             }
         } catch (Exception e) {
@@ -69,22 +69,23 @@ public class BorrowingSet implements EntitySet {
         return result;
     }
 
-    public boolean add(Borrowing b) {
+    // Note : insert date into database is kinda annoying to deal with.
+    // This method will not work 
+    // if the due_date does not exactly match with the database's datetime format
+    @Override
+    public boolean add(Entity b) {
         Connection con = DatabaseUser.getConnection();
         String sql = "insert into library.borrowing "
                 + "(borrower_id, id_BOOK, due_date)"
                 + "values(?,?,?)";
         PreparedStatement ps;
         try {
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-mm-dd");
             ps = con.prepareStatement(sql);
-            ps.setString(1, b.getId());
-            ps.setString(2, b.getBorrower_id());
-            ps.setString(3, b.getBorrowed_book());
-            ps.setString(4, b.getStart_date());
-            ps.setString(5, b.getDue_date());
-            ps.setString(6, b.getReturn_date());
-            ps.setString(7, b.getLast_modified_at());
-            ps.setString(8, b.getIs_delete());
+            ps.setString(1, b.getAttribute("borrower_id"));
+            ps.setString(2, b.getAttribute("borrowed_book"));
+            // Turn the string into ulti.Date, return epoch time, use that to creat sql.Date
+            ps.setDate(3, new Date(format.parse(b.getAttribute("return_date")).getTime()));
             ps.executeUpdate();
             return true;
         } catch (Exception e) {
@@ -108,8 +109,4 @@ public class BorrowingSet implements EntitySet {
         return ret;
     }
 
-    @Override
-    public boolean add(Entity new_entity) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
 }

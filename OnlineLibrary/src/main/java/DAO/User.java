@@ -6,7 +6,7 @@ package DAO;
 
 /**
  *
- * @author Lenovo
+ * @author Huynh Thai Duong
  */
 public class User {
     public static final String ADMIN = "admin";

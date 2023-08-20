@@ -80,7 +80,7 @@ public class Book implements Entity {
     }
 
     public void setYear_of_pub(String year_of_pub) {
-        this.year_of_pub = year_of_pub;
+        this.year_of_pub = year_of_pub.split("-")[0];
     }
 
     public String getDownload_link() {

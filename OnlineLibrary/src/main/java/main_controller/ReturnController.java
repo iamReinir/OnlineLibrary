@@ -2,18 +2,21 @@ package main_controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Date;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model_interface.Entity;
+import model_interface.EntityFactory;
 
 /**
  *
  * @author Nguyen Xuan Trung
  */
-@WebServlet(name = "BorowController", urlPatterns = {"/borow"})
-public class BorowController extends HttpServlet {
+@WebServlet(name = "ReturnController", urlPatterns = {"/return"})
+public class ReturnController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -26,12 +29,21 @@ public class BorowController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            //PrintWriter out = response.getWriter();
-            //It takes form data, so the value is the button's text
-            request.getRequestDispatcher("borrow.jsp");
-        } catch (Exception ex) {
-            request.getRequestDispatcher("notfound.html").forward(request, response);
+        response.setContentType("text/html;charset=UTF-8");
+        try ( PrintWriter out = response.getWriter()) {
+            String book_id = request.getParameter("book_id");
+            Entity[] borrows = EntityFactory.getEntitySet("borrowing")
+                    .searchResult(br -> {
+                        return br.getAttribute("book_id").equals(book_id)
+                                && !br.isDeleted();
+                    });
+            if (borrows.length != 1) {
+                request.getRequestDispatcher("notfound.html").forward(request, response);
+                return;
+            }
+            boolean result = true;
+            result = result && borrows[0].setAttribute("return_date", new Date().toString());
+            result = result && borrows[0].delete(true);
         }
     }
 

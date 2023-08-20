@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
- */
 package main_controller;
 
 import java.io.IOException;
@@ -17,10 +13,10 @@ import model_interface.EntityFactory;
 
 /**
  *
- * @author Giga P34
+ * @author Nguyen Xuan Trung
  */
-@WebServlet(name = "ReservationController", urlPatterns = {"/reservation"})
-public class ReservationController extends HttpServlet {
+@WebServlet(name = "RequestController", urlPatterns = {"/request"})
+public class RequestController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -42,6 +38,7 @@ public class ReservationController extends HttpServlet {
             String update = request.getParameter("update");
             String iborrow = request.getParameter("borrow");
             String book_id = request.getParameter("book_id");
+            String isreturn = request.getParameter("return");
             String user_id = (String) request.getSession().getAttribute("user_id");
             String user_role = (String) request.getSession().getAttribute("role");
             Predicate<Entity> user_is_borrowing_this = (borrowing) -> {
@@ -51,6 +48,7 @@ public class ReservationController extends HttpServlet {
             };
             if (user_role == null) {
                 response.sendRedirect("./login");
+                return;
             }
             if (update != null && user_role.equals("librarian")) {
                 response.sendRedirect("./update?book_id=" + book_id);
@@ -58,6 +56,13 @@ public class ReservationController extends HttpServlet {
 
             if (iborrow != null && user_role.equals("librarian")) {
                 response.sendRedirect("./borrow?book_id=" + book_id);
+            }
+            if (isreturn != null && user_role.equals("librarian")) {
+                out.print("<script>");
+                out.print("if(confirm('Do you want to return book id " + book_id + " back?'))");
+                out.print("window.location.href = './return?book_id=" + book_id + "';");
+                out.print("</script>");
+                return;
             }
 
             boolean result = false;

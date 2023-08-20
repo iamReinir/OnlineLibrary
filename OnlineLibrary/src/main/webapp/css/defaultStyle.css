@@ -284,3 +284,7 @@ input.star{
     display:none;
 }
 
+#borrowForm {
+    background-color: var(--mainColor);
+    padding:3rem;
+}

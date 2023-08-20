@@ -11,19 +11,19 @@ import java.util.Date;
  * @author Lenovo
  */
 public class Reservation {
-    private int id;
-    private int user_id;
-    private int book_id;
-    private boolean is_accept;
-    private Date request_date;
-    private Date accept_date;
+    private String id;
+    private String user_id;
+    private String book_id;
+    private String is_accept;
+    private String request_date;
+    private String accept_date;
     private boolean is_delete;
-     private Date last_modified_at;
+    private String last_modified_at;
 
     public Reservation() {
     }
 
-    public Reservation(int id, int user_id, int book_id, boolean is_accept, Date request_date, Date accept_date, boolean is_delete, Date last_modified_at) {
+    public Reservation(String id, String user_id, String book_id, String is_accept, String request_date, String accept_date, boolean is_delete, String last_modified_at) {
         this.id = id;
         this.user_id = user_id;
         this.book_id = book_id;
@@ -34,51 +34,51 @@ public class Reservation {
         this.last_modified_at = last_modified_at;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
-    public int getUser_id() {
+    public String getUser_id() {
         return user_id;
     }
 
-    public void setUser_id(int user_id) {
+    public void setUser_id(String user_id) {
         this.user_id = user_id;
     }
 
-    public int getBook_id() {
+    public String getBook_id() {
         return book_id;
     }
 
-    public void setBook_id(int book_id) {
+    public void setBook_id(String book_id) {
         this.book_id = book_id;
     }
 
-    public boolean isIs_accept() {
+    public String getIs_accept() {
         return is_accept;
     }
 
-    public void setIs_accept(boolean is_accept) {
+    public void setIs_accept(String is_accept) {
         this.is_accept = is_accept;
     }
 
-    public Date getRequest_date() {
+    public String getRequest_date() {
         return request_date;
     }
 
-    public void setRequest_date(Date request_date) {
+    public void setRequest_date(String request_date) {
         this.request_date = request_date;
     }
 
-    public Date getAccept_date() {
+    public String getAccept_date() {
         return accept_date;
     }
 
-    public void setAccept_date(Date accept_date) {
+    public void setAccept_date(String accept_date) {
         this.accept_date = accept_date;
     }
 
@@ -90,13 +90,13 @@ public class Reservation {
         this.is_delete = is_delete;
     }
 
-    public Date getLast_modified_at() {
+    public String getLast_modified_at() {
         return last_modified_at;
     }
 
-    public void setLast_modified_at(Date last_modified_at) {
+    public void setLast_modified_at(String last_modified_at) {
         this.last_modified_at = last_modified_at;
     }
-     
+
      
 }

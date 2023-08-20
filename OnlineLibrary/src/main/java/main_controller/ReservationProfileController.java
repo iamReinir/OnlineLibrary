@@ -80,7 +80,7 @@ public class ReservationProfileController extends HttpServlet {
         BookDAO bd = new BookDAO();
         List<Book> listBook = new ArrayList<>();
         for (Reservation reservation : lr) {
-            listBook.add(bd.getBookByID(reservation.getBook_id()));
+            listBook.add(bd.getBookByID(Integer.parseInt(reservation.getBook_id())));
         }
         int page = 1;
         String pageStr = request.getParameter("page");
@@ -93,7 +93,9 @@ public class ReservationProfileController extends HttpServlet {
         }
 
         final int PAGE_SIZE = 3;
-        request.setAttribute("listBook", listBook.subList((page - 1) * PAGE_SIZE, page * PAGE_SIZE));
+        Object showlist = listBook.subList((page - 1) * PAGE_SIZE,
+                page * PAGE_SIZE >= listBook.size() ? listBook.size() : page * PAGE_SIZE);
+        request.setAttribute("listBook", showlist);
         request.getRequestDispatcher("../borrowprofile.jsp").forward(request, response);
     }
 

@@ -2,7 +2,7 @@ package main_controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Date;
+import java.sql.Date;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -30,20 +30,31 @@ public class ReturnController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try ( PrintWriter out = response.getWriter()) {
+        try {
+            PrintWriter out = response.getWriter();
             String book_id = request.getParameter("book_id");
             Entity[] borrows = EntityFactory.getEntitySet("borrowing")
                     .searchResult(br -> {
-                        return br.getAttribute("book_id").equals(book_id)
-                                && !br.isDeleted();
+                return br.getAttribute("borrowed_book").equals(book_id)
+                        && !br.isDeleted();
                     });
             if (borrows.length != 1) {
                 request.getRequestDispatcher("notfound.html").forward(request, response);
                 return;
             }
             boolean result = true;
-            result = result && borrows[0].setAttribute("return_date", new Date().toString());
+            result = result && borrows[0].setAttribute("return_date", new java.sql.Date(new java.util.Date().getTime()).toString());
             result = result && borrows[0].delete(true);
+            out.print("<script>");
+            if (result) {
+                out.print("alert('Return success!');");
+            } else {
+                out.print("alert('An error has occurred! Contact your admin for support!');");
+            }
+            out.print("window.location.href='./index'");
+            out.print("</script>");
+        } catch (Exception ex) {
+            System.out.println("Error in returncontroller");
         }
     }
 

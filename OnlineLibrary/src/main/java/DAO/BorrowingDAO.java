@@ -15,7 +15,7 @@ public class BorrowingDAO {
         List<Borrowing> list = new ArrayList<>();
         Entity[] borrowing = EntityFactory.getEntitySet("borrowing").searchResult(br -> {
             return br.getAttribute("borrower_id").equals(String.valueOf(id))
-                    || br.getAttribute("return_date") == null;
+                    && br.getAttribute("return_date") == null;
         });
         for (Entity e : borrowing) {
             list.add(new Borrowing(
@@ -35,7 +35,7 @@ public class BorrowingDAO {
         List<Borrowing> list = new ArrayList<>();
         Entity[] borrowing = EntityFactory.getEntitySet("borrowing").searchResult(br -> {
             return br.getAttribute("borrower_id").equals(String.valueOf(id))
-                    || br.getAttribute("return_date") != null;
+                    && br.getAttribute("return_date") != null;
         });
         for (Entity e : borrowing) {
             list.add(new Borrowing(

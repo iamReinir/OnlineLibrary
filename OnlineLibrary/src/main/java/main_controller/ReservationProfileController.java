@@ -92,7 +92,7 @@ public class ReservationProfileController extends HttpServlet {
         Object showlist = listBook.subList((page - 1) * PAGE_SIZE,
                 page * PAGE_SIZE >= listBook.size() ? listBook.size() : page * PAGE_SIZE);
         request.setAttribute("listBook", showlist);
-        request.getRequestDispatcher("../borrowprofile.jsp").forward(request, response);
+        request.getRequestDispatcher("../reservationprofile.jsp").forward(request, response);
     }
 
     /**

@@ -92,7 +92,7 @@ public class HistoryProfileController extends HttpServlet {
         Object showlist = listBook.subList((page - 1) * PAGE_SIZE,
                 page * PAGE_SIZE >= listBook.size() ? listBook.size() : page * PAGE_SIZE);
         request.setAttribute("listBook", showlist);
-        request.getRequestDispatcher("../borrowprofile.jsp").forward(request, response);
+        request.getRequestDispatcher("../historyprofile.jsp").forward(request, response);
     }
 
     /**

@@ -1,13 +1,13 @@
 
 
 <%-- 
-    Document   : borrowprofile
+    Document   : login.jsp
     Created on : Aug 15, 2023, 12:38:18 PM
-    Author     : Huynh Thai Duong
+    Author     : Lenovo
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -97,7 +97,7 @@
 
         <div class="containner">
           <div class="borrow-list">
-            <h5 style="margin-top: 20px; margin-left: 10px;">Borrow List:</h5>
+            <h5 style="margin-top: 20px; margin-left: 10px;">History List:</h5>
             <div class="content row">
                 <c:forEach items="${requestScope.listBook}" var="b">
                     <div class="card col-md-4" style="width: 18rem;">

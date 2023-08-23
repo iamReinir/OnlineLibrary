@@ -18,7 +18,8 @@ public class ReservationDAO {
     public List<Reservation> getAllReservationByUserID(int id) {
         List<Reservation> list = new ArrayList<>();
         Entity[] reservation = EntityFactory.getEntitySet("reservation").searchResult(br -> {
-            return br.getAttribute("user_id").equals(String.valueOf(id));
+            return br.getAttribute("user_id").equals(String.valueOf(id))
+                    && !br.isDeleted();
         });
         for (Entity e : reservation) {
             System.out.println(e.getAttribute("request_date"));

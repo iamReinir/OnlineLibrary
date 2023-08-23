@@ -1,0 +1,21 @@
+<%-- any content can be specified here e.g.: --%>
+<%@ page pageEncoding="UTF-8" %>
+<section id="book">
+            <h2>${this_book.title}<h2>
+
+            <img src="http://lgimages.s3.amazonaws.com/nc-sm.gif"
+                 alt="cover"/>
+
+            <h3>Summary</h3>
+            <p>${this_book.summary}</p>
+
+            <h3>Author</h3>
+            <p>${this_book.author}</p>
+
+            <h3>Year</h3>
+            <p>${this_book.year_of_pub}</p> 
+
+            <c:if test="${this_book.download_link != null}">
+                   <h3><a href='${this_book.download_link}'>Download</a></h3>
+            </c:if>
+</section>

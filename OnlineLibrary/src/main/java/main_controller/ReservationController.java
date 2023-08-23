@@ -34,11 +34,31 @@ public class ReservationController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
+    }
+
+    /**
+     * Handles the HTTP <code>GET</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        if (request.getSession().getAttribute("role").equals("librarian") == false) {
+            response.sendRedirect("./login");
+        }
         // Tạo một danh sách (ArrayList) chứa thông tin người đặt trước
         ArrayList<Reservation> reservations = new ArrayList<>();
         Entity[] dbReservate = EntityFactory.getEntitySet("reservation").all();
         for (Entity e : dbReservate) {
+            if (e.isDeleted()) {
+                continue;
+            }
             reservations.add(new Reservation(e.getAttribute("id"),
                     e.getAttribute("user_id"),
                     e.getAttribute("book_id"),
@@ -57,21 +77,6 @@ public class ReservationController extends HttpServlet {
         // Forward yêu cầu sang trang JSP
         RequestDispatcher dispatcher = request.getRequestDispatcher("/reservation.jsp");
         dispatcher.forward(request, response);
-    }
-
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
     }
 
     /**
@@ -96,6 +101,6 @@ public class ReservationController extends HttpServlet {
     @Override
     public String getServletInfo() {
         return "Short description";
-    }// </editor-fold>
+    }
 
 }

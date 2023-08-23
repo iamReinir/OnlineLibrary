@@ -1,5 +1,8 @@
 package model;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import modelSet.DatabaseUser;
 import model_interface.Entity;
 
 /**
@@ -144,6 +147,7 @@ public class Reservate implements Entity {
     public boolean setAttribute(String attribute_name, String value) {
         switch (attribute_name) {
             case "id":
+                // Cannot change id
                 return false;
             case "user_id":
                 user_id = value;
@@ -161,7 +165,7 @@ public class Reservate implements Entity {
                 accept_date = value;
                 break;
             case "is_delete":
-                is_delete = value;
+                // change via the delete(boolean) method
                 break;
             case "last_modified_at":
                 last_modified_at = value;
@@ -169,7 +173,22 @@ public class Reservate implements Entity {
             default:
                 return false;
         }
+        if (id != null)
+            return update(attribute_name, value);
         return true;
+    }
+
+    private boolean update(String attr_name, String value) {
+        Connection con = DatabaseUser.getConnection();
+        try {
+            PreparedStatement stmt = con.prepareStatement("UPDATE reservation SET " + attr_name + "=? reserve_id=?");
+            stmt.setString(1, value);
+            stmt.setString(2, id);
+            stmt.execute();
+            return true;
+        } catch (Exception ex) {
+            return false;
+        }
     }
 
     @Override
@@ -186,7 +205,19 @@ public class Reservate implements Entity {
     @Override
     public boolean delete(boolean is_delete) {
         this.is_delete = (is_delete ? "true" : "false");
-        return is_delete;
+        if (id == null) {
+            return true;
+        }
+        Connection con = DatabaseUser.getConnection();
+        try {
+            PreparedStatement stmt = con.prepareStatement("UPDATE reservation SET is_delete=? WHERE reserve_id=?");
+            stmt.setBoolean(1, is_delete);
+            stmt.setString(2, id);
+            stmt.execute();
+            return true;
+        } catch (Exception ex) {
+            return false;
+        }
     }
 
     @Override

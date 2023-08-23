@@ -35,6 +35,7 @@ public class RequestController extends HttpServlet {
             // Will be null if the button is not clicked
             String reservation = request.getParameter("reservation");
             String renewal = request.getParameter("renewal");
+            String reservation_cancel = request.getParameter("reservationCancel");
             String update = request.getParameter("update");
             String iborrow = request.getParameter("borrow");
             String book_id = request.getParameter("book_id");
@@ -52,10 +53,12 @@ public class RequestController extends HttpServlet {
             }
             if (update != null && user_role.equals("librarian")) {
                 response.sendRedirect("./update?book_id=" + book_id);
+                return;
             }
 
             if (iborrow != null && user_role.equals("librarian")) {
                 response.sendRedirect("./borrow?book_id=" + book_id);
+                return;
             }
             if (isreturn != null && user_role.equals("librarian")) {
                 out.print("<script>");
@@ -66,12 +69,9 @@ public class RequestController extends HttpServlet {
             }
 
             boolean result = false;
-            if (reservation != null) {
-                System.out.println("Reservation");
-                Entity newReser = EntityFactory.createEntity("reservation");
-                newReser.setAttribute("user_id", user_id);
-                newReser.setAttribute("book_id", book_id);
-                result = EntityFactory.getEntitySet("reservation").add(newReser);
+            if (reservation != null || reservation_cancel != null) {
+                request.getRequestDispatcher("./addReservation").forward(request, response);
+                return;
             }
             if (renewal != null) {
                 System.out.println("Renewal");

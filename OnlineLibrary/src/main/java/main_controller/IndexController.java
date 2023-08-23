@@ -40,7 +40,7 @@ public class IndexController extends HttpServlet {
                 case "reader":
                 case "librarian":
                 default: //guest user
-                    main_page = "./mainpage.jsp";
+                    main_page = "./mainpage";
                     break;
             }
             request.getRequestDispatcher(main_page).forward(request, response);

@@ -25,6 +25,7 @@ public class BookSet implements EntitySet {
             PreparedStatement ps = con.prepareStatement(query);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
+                String download = rs.getString("download_link");
                 Book b = new Book();
                 b.setId(rs.getString("id_BOOK"));
                 b.setIsbn(rs.getString("ISBN"));
@@ -32,7 +33,8 @@ public class BookSet implements EntitySet {
                 b.setAuthor(rs.getString("author"));
                 // the database return YYYY-01-01 despite can only save year into it
                 b.setYear_of_pub(rs.getString("year_of_pub").split("-")[0]);
-                b.setDownload_link(rs.getString("download_link"));
+                // database return "null" if there is not download link
+                b.setDownload_link(download.equals("null") ? null : download);
                 b.setAdd_date(rs.getString("add_date"));
                 b.setIs_delete(rs.getString("is_delete").equals("1") ? "true" : "false");
                 b.setLast_modified_at(rs.getString("last_modified_at"));

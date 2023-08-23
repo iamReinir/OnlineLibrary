@@ -2,21 +2,21 @@
 
 <header>
     <%
-        String role = (String) session.getAttribute("role");
+        String urole = (String) session.getAttribute("role");
         String username = (String) session.getAttribute("username");        
     %>
     <h1><a href="./index">Online Library</a></h1>     
     <nav id="userActions">        
-        <% if (role == null || role.equals("quest")) { %>
+        <% if (urole == null || urole.equals("quest")) { %>
         <a href="./login">Login</a>
         <a href="./signup">Sign Up</a>
         <% } %>
-        <% if (role != null && role.equals("reader")) {%>
+        <% if (urole != null && urole.equals("reader")) {%>
         <p>Logged in as <%=username%></p>
         <a href="./profile">Personal profile</a>
         <a href="./logout" onclick="return confirm('Do you really want to logout?')">Logout</a>
         <% } %>
-        <% if (role != null && role.equals("librarian")) {%>
+        <% if (urole != null && urole.equals("librarian")) {%>
         <p>Logged in as <%=username%> <br/> Librarian privilege</p>        
         <a href="./addbook.html">Add a new book</a>
         <a href="./reservation">View all reservation requests</a>

@@ -1,10 +1,6 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
- */
 package main_controller;
 
-import DAO.UserDAO;
+import DAO.ReservationDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -12,13 +8,15 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model_interface.Entity;
+import model_interface.EntityFactory;
 
 /**
  *
- * @author Raiku
+ * @author Nguyen Xuan Trung
  */
-@WebServlet(name = "RemoveUserController", urlPatterns = {"/removeUser"})
-public class RemoveUserController extends HttpServlet {
+@WebServlet(name = "ReservationAddController", urlPatterns = {"/addReservation"})
+public class ReservationAddController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -29,24 +27,41 @@ public class RemoveUserController extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
         try ( PrintWriter out = response.getWriter()) {
-            String role = (String) request.getSession().getAttribute("role");
-            if (role != null && role.equals("admin")) {
-                request.setCharacterEncoding("UTF-8");
-                String user_id = request.getParameter("userId");
-                out.print("<script>");
-                if (UserDAO.removeUser(user_id)) {
-                    out.print("alert('Delete successfully!');");
+
+            out.print("<script>");
+            String user_id = (String) request.getSession().getAttribute("user_id");
+            String book_id = request.getParameter("book_id");
+            boolean isCancel = request.getParameter("reservationCancel") != null;
+
+            if (isCancel) {
+                if (ReservationDAO.cancel(book_id, user_id)) {
+                    out.print("alert('Your reservation is canceled!');");
                 } else {
-                    out.print("alert('Delete failed! Contact your IT for support!');");
+                    out.print("alert('Cannot cancel your request!"
+                            + " Please contact your admin for support.');");
                 }
-                out.print("window.location.href = './index';");
+                out.print("window.location.href = './book?book_id=" + book_id + "';");
                 out.print("</script>");
-            } else {
-                response.sendRedirect("./notfound.html");
+                return;
             }
+            if (ReservationDAO.curentlyReserving(user_id, book_id)) {
+                out.print("alert('You already has a reservation on this book!');");
+                out.print("window.location.href = './book?book_id=" + book_id + "';");
+                out.print("</script>");
+                return;
+            } else if (ReservationDAO.add(book_id, user_id)) {
+                out.print("alert('Your reservation is recorded and pending!');");
+            } else {
+                out.print("alert('Cannot save your request!"
+                        + " Please contact your admin for support.');");
+            }
+            out.print("window.location.href = './book?book_id=" + book_id + "';");
+            out.print("</script>");
         }
     }
 

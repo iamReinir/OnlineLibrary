@@ -34,7 +34,7 @@ public class UserDAO {
         Predicate<Entity> check_username_password = (user) -> {
             boolean username_check = user.getAttribute("username").equals(username);
             boolean password_check = user.getAttribute("password").equals(password);
-            return username_check && password_check;
+            return username_check && password_check && !user.isDeleted();
         };
         Entity[] result = users.searchResult(check_username_password);
         if (result.length < 1) {
@@ -63,7 +63,7 @@ public class UserDAO {
         Predicate<Entity> check_username_password = (user) -> {
             boolean username_check = user.getAttribute("username").equals(username);
             boolean password_check = user.getAttribute("password").equals(password);
-            return username_check && password_check;
+            return username_check && password_check && !user.isDeleted();
         };
         Entity[] result = users.searchResult(check_username_password);
         if (result.length < 1) {
@@ -113,9 +113,9 @@ public class UserDAO {
         return users.add(newUser);
     }
 
-    public static boolean removeUser(String username) {
+    public static boolean removeUser(String user_id) {
         Entity[] users = EntityFactory.getEntitySet("user").searchResult(u -> {
-            return u.getAttribute("username").equals(username);
+            return u.getAttribute("id").equals(user_id);
         });
         if (users.length != 1) {
             return false;

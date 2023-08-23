@@ -148,7 +148,7 @@ public class Borrowing implements Entity {
     private boolean update(String attr_name, String value) {
         Connection con = DatabaseUser.getConnection();
         try {
-            PreparedStatement stmt = con.prepareStatement("UPDATE borrowing SET " + attr_name + "=? WHERE id_BOOK=?");
+            PreparedStatement stmt = con.prepareStatement("UPDATE borrowing SET " + attr_name + "=? WHERE borrow_id=?");
             stmt.setString(1, value);
             stmt.setString(2, id);
             stmt.execute();

@@ -1,5 +1,6 @@
 package main_controller;
 
+import DAO.BookDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -30,11 +31,15 @@ public class BorrowController extends HttpServlet {
         try {
             //PrintWriter out = response.getWriter();     
             String role = (String) request.getSession().getAttribute("role");
+            int book_id = Integer.parseInt(request.getParameter("book_id").toString());
             if (!role.equals("librarian")) {
                 throw new Exception("Not a librarian");
             }
+            request.setAttribute("this_book", BookDAO.getBookByID(book_id));
             request.getRequestDispatcher("borrow.jsp").forward(request, response);
+
         } catch (Exception ex) {
+            ex.printStackTrace();
             request.getRequestDispatcher("notfound.html").forward(request, response);
         }
     }
@@ -88,7 +93,7 @@ public class BorrowController extends HttpServlet {
                 out.print("alert('Error adding a borrowing. Contact your admin for support!');");
             } else {
                 out.print("alert('Success!');");
-                out.print("window.location.href = './book.jsp?book_id=" + book_id + "';");
+                out.print("window.location.href = './book?book_id=" + book_id + "';");
             }
             out.print("</script>");
 

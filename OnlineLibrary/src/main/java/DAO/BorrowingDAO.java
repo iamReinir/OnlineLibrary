@@ -51,4 +51,19 @@ public class BorrowingDAO {
         }
         return list;
     }
+
+    public static boolean isAvailable(String book_id) {
+        return EntityFactory.getEntitySet("borrowing").searchResult(br -> {
+            return br.getAttribute("borrowed_book").equals(book_id)
+                    && br.isDeleted() == false;
+        }).length == 0;
+    }
+
+    public static boolean isBorrowing(String book_id, String user_id) {
+        return EntityFactory.getEntitySet("borrowing").searchResult(br -> {
+            return br.getAttribute("borrowed_book").equals(book_id)
+                    && br.getAttribute("borrower_id").equals(user_id)
+                    && br.isDeleted() == false;
+        }).length != 0;
+    }
 }

@@ -28,10 +28,11 @@ public class ReservationSet implements EntitySet {
                 r.setId(rs.getString(1));
                 r.setUser_id(rs.getString(2));
                 r.setBook_id(rs.getString(3));
-                r.setIs_accept(rs.getString(4));
+                r.setIs_accept(rs.getString(4).equals("1") ? "true" : "false");
                 r.setRequest_date(rs.getString(5));
                 r.setAccept_date(rs.getString(6));
                 r.setLast_modified_at(rs.getString(7));
+                r.setIs_delete(rs.getString("is_delete").equals("1") ? "true" : "false");
                 list.add(r);
             }
 

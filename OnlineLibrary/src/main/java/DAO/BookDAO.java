@@ -9,20 +9,9 @@ import model_interface.EntityFactory;
  */
 public class BookDAO {
 
-    public Book getBookByID(int id) {
+    public static Book getBookByID(int id) {
         Entity book = EntityFactory.getEntitySet("book").getEntity(String.valueOf(id));
-        Book result = new Book(
-                Integer.parseInt(book.getAttribute("id")),
-                book.getAttribute("isbn"),
-                book.getAttribute("title"),
-                book.getAttribute("author"),
-                Integer.parseInt(book.getAttribute("year_of_pub")),
-                book.getAttribute("download_link"),
-                book.getAttribute("add_date"),
-                book.isDeleted(),
-                book.getAttribute("last_modified_at"),
-                book.getAttribute("summary")
-        );
+        Book result = new Book(book);
         return result;
     }
 }

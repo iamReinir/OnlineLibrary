@@ -71,7 +71,7 @@ public class ReviewController extends HttpServlet {
             newReview.setAttribute("user_review", review);
             newReview.setAttribute("rating", rating);
             EntityFactory.getEntitySet("review").add(newReview);
-            response.sendRedirect("./book.jsp?book_id=" + book_id);
+            response.sendRedirect("./book?book_id=" + book_id);
         } catch (Exception ex) {
             request.getRequestDispatcher("notfound.html").forward(request, response);
         }

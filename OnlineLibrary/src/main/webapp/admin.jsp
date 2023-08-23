@@ -122,7 +122,7 @@
                         <input type="submit" value="Add User">
                     </form>
 
-                    <h3>Remove User</h3>
+                    <h3>Mark User as inactive</h3>
                     <form class="form-css" action="removeUser" method="post">
                         <label for="userId">User ID:</label>
                         <input type="text" id="userId" name="userId" required><br>

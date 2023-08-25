@@ -44,12 +44,12 @@
             <th>user ID</th>
         </tr>
         <c:forEach var="reservation" items="${reservations}">            
-            <tr>
+            <tr>                
                 <td>${reservation.book_id}</td>
                 <td>${reservation.bookName}</td>
                 <td>${reservation.userName}</td>
-                <td>${reservation.user_id}</td>
-            </tr>
+                <td>${reservation.user_id}</td>                               
+            </tr>           
         </c:forEach>
     </table>
     <script src="js/defaultStyle.js"></script>

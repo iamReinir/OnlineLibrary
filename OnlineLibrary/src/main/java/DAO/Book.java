@@ -20,7 +20,6 @@ public class Book {
     private String download_link;
     private boolean is_delete;
     private String summary;
-
     public Book() {
     }
 
